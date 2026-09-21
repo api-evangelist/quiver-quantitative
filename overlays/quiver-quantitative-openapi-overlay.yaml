@@ -1,0 +1,5 @@
+generated: 2026-09-21
+method: derived
+type: OpenAPIOverlay
+spec: openapi/_original/schema.json
+actions: []

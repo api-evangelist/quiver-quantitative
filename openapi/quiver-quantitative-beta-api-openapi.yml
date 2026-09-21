@@ -1,0 +1,78 @@
+openapi: 3.2.0
+info:
+  title: Quiver Quantitative Beta API
+  version: v1
+  contact:
+    name: 'Us: info@quiverquant.com'
+    email: info@quiverquant.com
+  license:
+    name: Terms of Service
+    url: https://www.quiverquant.com/termsofservice/
+  description: 'Operations tagged Beta across 2 of this provider''s published API definitions: schema.json, quiver-quantitative-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.quiverquant.com
+tags:
+- name: Beta
+paths:
+  /beta/token/login/:
+    post:
+      operationId: token_login_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenCreate'
+      security:
+      - WebPlatformTokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenCreate'
+          description: ''
+      x-internal: true
+      tags:
+      - Beta
+      summary: Token login create
+      x-summary-source: derived
+    servers:
+    - url: https://api.quiverquant.com
+  /beta/token/logout/:
+    post:
+      operationId: token_logout_create
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '204':
+          description: No response body
+      x-internal: true
+      tags:
+      - Beta
+      summary: Token logout create
+      x-summary-source: derived
+    servers:
+    - url: https://api.quiverquant.com
+components:
+  schemas:
+    TokenCreate:
+      type: object
+      properties:
+        password:
+          type: string
+        username:
+          type: string
+  securitySchemes:
+    WebPlatformTokenAuth:
+      type: http
+      scheme: bearer
+x-refined-from:
+- schema.json
+- quiver-quantitative-openapi.json

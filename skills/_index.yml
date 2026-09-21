@@ -1,0 +1,11 @@
+generated: '2026-09-21'
+method: generated
+generator: extract-docs-artifacts.py skills (local)
+source: openapi/quiver-quantitative-openapi.json
+skills:
+- file: skills/quiver-quantitative-login-logout.md
+  name: quiver-quantitative-login-logout
+  api: openapi/quiver-quantitative-openapi.json
+  operations:
+  - token_login_create
+  - token_logout_create

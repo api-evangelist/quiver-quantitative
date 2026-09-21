@@ -1,0 +1,1189 @@
+openapi: 3.2.0
+info:
+  title: Quiver Quantitative Tier 2 API
+  version: v1
+  contact:
+    name: 'Us: info@quiverquant.com'
+    email: info@quiverquant.com
+  license:
+    name: Terms of Service
+    url: https://www.quiverquant.com/termsofservice/
+  description: 'Operations tagged Tier 2 across 2 of this provider''s published API definitions: schema.json, quiver-quantitative-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.quiverquant.com
+tags:
+- name: Tier 2
+  description: tier 2 endpoint
+paths:
+  /beta/historical/allpatents/{ticker}:
+    get:
+      operationId: historical_allpatents_retrieve
+      description: Returns patents granted to the given ticker.
+      summary: Historical Patents
+      parameters:
+      - in: query
+        name: date_from
+        schema:
+          type: string
+          format: date
+        description: Date to query from in YYYYMMDD format
+      - in: query
+        name: date_to
+        schema:
+          type: string
+          format: date
+        description: Date to query to in YYYYMMDD format
+      - in: query
+        name: page
+        schema:
+          type: integer
+        description: Page number
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+        description: Items / page
+      - in: path
+        name: ticker
+        schema:
+          type: string
+        description: Ticker for any given stock
+        required: true
+      tags:
+      - Tier 2
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoricalPatentsResponse'
+          description: ''
+    servers:
+    - url: https://api.quiverquant.com
+  /beta/historical/eventsbeta/{ticker}:
+    get:
+      operationId: historical_eventsbeta_retrieve
+      description: Returns historical event beta values for the given ticker, along with historical election odds.
+      summary: Historical Events Beta
+      parameters:
+      - in: path
+        name: ticker
+        schema:
+          type: string
+        description: Ticker for any given stock
+        required: true
+      tags:
+      - Tier 2
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoricalEventsBetaResponse'
+          description: ''
+      x-internal: true
+    servers:
+    - url: https://api.quiverquant.com
+  /beta/historical/executivecompensation/{ticker}:
+    get:
+      operationId: historical_executivecompensation_retrieve
+      description: Returns historical executive compensation data for a specific ticker. Paginated with a default of 200 results per page.
+      summary: Historical Executive Compensation
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+        description: Page number
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+        description: Items / page
+      - in: path
+        name: ticker
+        schema:
+          type: string
+        description: Ticker for any given stock
+        required: true
+      tags:
+      - Tier 2
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoricalExecCompResponse'
+          description: ''
+    servers:
+    - url: https://api.quiverquant.com
+  /beta/live/allpatents:
+    get:
+      operationId: live_allpatents_retrieve
+      description: Returns patents granted recently, max 30 day range.
+      summary: Recent Patents
+      parameters:
+      - in: query
+        name: date_from
+        schema:
+          type: string
+          format: date
+        description: Date to query from in YYYYMMDD format
+      - in: query
+        name: date_to
+        schema:
+          type: string
+          format: date
+        description: Date to query to in YYYYMMDD format
+      tags:
+      - Tier 2
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecentPatentsResponse'
+          description: ''
+    servers:
+    - url: https://api.quiverquant.com
+  /beta/live/appratings:
+    get:
+      operationId: live_appratings_retrieve
+      description: Returns the last week of app ratings data.
+      summary: App Ratings
+      tags:
+      - Tier 2
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppRatingResponse'
+          description: ''
+    servers:
+    - url: https://api.quiverquant.com
+  /beta/live/cnbc:
+    get:
+      operationId: live_cnbc_retrieve
+      description: Returns list of recent CNBC trades.
+      summary: Recent CNBC Trades
+      parameters:
+      - in: query
+        name: analyst
+        schema:
+          type: string
+        description: CNBC Analyst name contains
+      - in: query
+        name: bulk
+        schema:
+          type: boolean
+        description: Return bulk data
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+        description: Date, formatted as YYYYMMDD
+      - in: query
+        name: ticker
+        schema:
+          type: string
+        description: Ticker for any given stock
+      tags:
+      - Tier 2
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecentCNBCResponse'
+          description: ''
+      x-internal: true
+    servers:
+    - url: https://api.quiverquant.com
+  /beta/live/insiders:
+    get:
+      operationId: live_insiders_retrieve
+      description: Returns recent insider transactions.
+      summary: Live Insider Trading
+      parameters:
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+        description: Date, formatted as YYYYMMDD
+      - in: query
+        name: limit_codes
+        schema:
+          type: boolean
+        description: Limit codes for form4 search
+      - in: query
+        name: page
+        schema:
+          type: integer
+        description: Page number
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+        description: Items / page
+      - in: query
+        name: ticker
+        schema:
+          type: string
+        description: Ticker for any given stock
+      - in: query
+        name: uploaded
+        schema:
+          type: string
+          format: date
+        description: Date the transaction was uploaded, formatted as YYYYMMDD
+      tags:
+      - Tier 2
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form4Response'
+          description: ''
+    servers:
+    - url: https://api.quiverquant.com
+  /beta/live/patentdrift:
+    get:
+      operationId: live_patentdrift_retrieve
+      description: Returns historical patent drift data for all tickers.
+      summary: Patent Drift
+      parameters:
+      - in: query
+        name: date_from
+        schema:
+          type: string
+          format: date
+        description: Date to query from in YYYYMMDD format
+      - in: query
+        name: date_to
+        schema:
+          type: string
+          format: date
+        description: Date to query to in YYYYMMDD format
+      - in: query
+        name: latest
+        schema:
+          type: boolean
+        description: Fetch latest results
+      - in: query
+        name: ticker
+        schema:
+          type: string
+        description: Ticker for any given stock
+      tags:
+      - Tier 2
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatentDriftResponse'
+          description: ''
+    servers:
+    - url: https://api.quiverquant.com
+  /beta/live/patentmomentum:
+    get:
+      operationId: live_patentmomentum_retrieve
+      description: Returns historical patent momentum data for all tickers.
+      summary: Patent Momentum
+      parameters:
+      - in: query
+        name: date_from
+        schema:
+          type: string
+          format: date
+        description: Date to query from in YYYYMMDD format
+      - in: query
+        name: date_to
+        schema:
+          type: string
+          format: date
+        description: Date to query to in YYYYMMDD format
+      - in: query
+        name: latest
+        schema:
+          type: boolean
+        description: Fetch latest results
+      - in: query
+        name: ticker
+        schema:
+          type: string
+        description: Ticker for any given stock
+      tags:
+      - Tier 2
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatentMomentumResponse'
+          description: ''
+    servers:
+    - url: https://api.quiverquant.com
+  /beta/live/quivernews:
+    get:
+      operationId: live_quivernews_retrieve
+      description: Returns recent news articles from Quiver News. Paginated with a default of 30 results per page. Can be filtered by ticker.
+      summary: Live Quiver News
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+        description: Page number
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+        description: Items / page
+      - in: query
+        name: ticker
+        schema:
+          type: string
+        description: Ticker for any given stock
+      tags:
+      - Tier 2
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LiveQuiverNewsResponse'
+          description: ''
+    servers:
+    - url: https://api.quiverquant.com
+  /beta/live/sec13f:
+    get:
+      operationId: live_sec13f_retrieve
+      description: Returns static portfolio holdings at specific filing periods.
+      summary: Live SEC13F
+      parameters:
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+        description: Date, formatted as YYYYMMDD
+      - in: query
+        name: owner
+        schema:
+          type: string
+        description: Owner for SEC13F Search
+      - in: query
+        name: page
+        schema:
+          type: integer
+        description: Page number
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+        description: Items / page
+      - in: query
+        name: period
+        schema:
+          type: string
+          format: date
+        description: Period for SEC13F Search
+      - in: query
+        name: ticker
+        schema:
+          type: string
+        description: Ticker for any given stock
+      - in: query
+        name: today
+        schema:
+          type: boolean
+        description: Search today's data for WSB search
+      tags:
+      - Tier 2
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SEC13FResponse'
+          description: ''
+    servers:
+    - url: https://api.quiverquant.com
+  /beta/live/sec13fchanges:
+    get:
+      operationId: live_sec13fchanges_retrieve
+      description: Returns static portfolio holdings at specific filing periods.
+      summary: Live SEC13F Changes
+      parameters:
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+        description: Date, formatted as YYYYMMDD
+      - in: query
+        name: mobile
+        schema:
+          type: boolean
+        description: Mobile response
+      - in: query
+        name: most_recent
+        schema:
+          type: boolean
+        description: Restrict results to most recent report period only
+      - in: query
+        name: owner
+        schema:
+          type: string
+        description: Owner for SEC13F Search
+      - in: query
+        name: page
+        schema:
+          type: integer
+        description: Page number
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+        description: Items / page
+      - in: query
+        name: period
+        schema:
+          type: string
+          format: date
+        description: Period for SEC13F Search
+      - in: query
+        name: show_new_funds
+        schema:
+          type: boolean
+        description: Include funds filing for the first time in results
+      - in: query
+        name: ticker
+        schema:
+          type: string
+        description: Ticker for any given stock
+      - in: query
+        name: today
+        schema:
+          type: boolean
+        description: Search today's data for WSB search
+      tags:
+      - Tier 2
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SEC13FChangesResponse'
+          description: ''
+    servers:
+    - url: https://api.quiverquant.com
+  /beta/live/topshareholders/{ticker}:
+    get:
+      operationId: live_topshareholders_retrieve
+      description: Returns the top shareholders for a specific ticker, including both direct and derivative holdings.
+      summary: Live Top Shareholders
+      parameters:
+      - in: path
+        name: ticker
+        schema:
+          type: string
+        description: Ticker for any given stock
+        required: true
+      tags:
+      - Tier 2
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LiveTopShareholdersResponse'
+          description: ''
+    servers:
+    - url: https://api.quiverquant.com
+  /beta/today/eventsbeta:
+    get:
+      operationId: today_eventsbeta_retrieve
+      description: Returns current event beta values for all companies.
+      summary: Today Events Beta
+      tags:
+      - Tier 2
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodayEventsBetaResponse'
+          description: ''
+      x-internal: true
+    servers:
+    - url: https://api.quiverquant.com
+components:
+  schemas:
+    TodayEventBeta:
+      title: TodayEventBeta
+      description: Base pydantic model used to hold standard config.
+      type: object
+      properties:
+        Ticker:
+          title: Ticker
+          type: string
+        FirstEventBeta:
+          title: Firsteventbeta
+          type: number
+        FirstEventOdds:
+          title: Firsteventodds
+          type: number
+        EventName:
+          title: Eventname
+          default: PresidentialElection2020
+          type: string
+        FirstEventName:
+          title: Firsteventname
+          default: TrumpVictory
+          type: string
+        SecondEventName:
+          title: Secondeventname
+          default: BidenVictory
+          type: string
+        SecondEventBeta:
+          title: Secondeventbeta
+          type: number
+        SecondEventOdds:
+          title: Secondeventodds
+          type: number
+      required:
+      - Ticker
+      - FirstEventOdds
+    SEC13FChangesEntryMobile:
+      title: SEC13FChangesEntryMobile
+      description: Base pydantic model used to hold standard config.
+      type: object
+      properties:
+        Ticker:
+          title: Ticker
+          description: Company ticker
+          type: string
+        Fund:
+          title: Fund
+          description: Name of the institution
+          type: string
+        Change:
+          title: Change
+          description: Value (USD) of fund's purchases/sales over last quarter
+          type: number
+      required:
+      - Ticker
+      - Fund
+    TopShareholdersEntry:
+      title: TopShareholdersEntry
+      description: Top shareholders entry.
+      type: object
+      properties:
+        owner_name:
+          title: Owner Name
+          type: string
+        owner_title:
+          title: Owner Title
+          type: string
+        shares:
+          title: Shares
+          type: integer
+    PatentMomentumResponse:
+      title: PatentMomentumResponse
+      description: JSON Response structure for patent momentum endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/PatentMomentum'
+    SEC13FEntry:
+      title: SEC13FEntry
+      description: Base pydantic model used to hold standard config.
+      type: object
+      properties:
+        Date:
+          title: Date
+          description: Filing date (expressed in ms since Epoch CST)
+          type: string
+          format: date-time
+        ReportPeriod:
+          title: Reportperiod
+          description: Reporting period end date (expressed in ms since Epoch CST)
+          type: string
+          format: date-time
+        Name:
+          title: Name
+          type: string
+        Ticker:
+          title: Ticker
+          description: Company ticker
+          type: string
+        CUSIP:
+          title: Cusip
+          description: Company CUSIP
+          type: string
+        Fund:
+          title: Fund
+          description: Name of the institution
+          type: string
+        Class:
+          title: Class
+          description: Text description of the holdings
+          type: string
+        Value:
+          title: Value
+          description: Value (USD) of fund's position
+          type: integer
+        Shares:
+          title: Shares
+          description: Number of shares held by fund
+          type: integer
+        SH/PRN:
+          title: Sh/Prn
+          description: Indicates whether holdings are principal amount on debt securities
+          type: string
+        Put/Call:
+          title: Put/Call
+          description: Indicates whether holdings are puts or calls
+          type: string
+        Direction:
+          title: Direction
+          description: Investment discretion held by manager
+          type: string
+      required:
+      - Date
+      - Name
+      - Fund
+      - Value
+      - Shares
+      - SH/PRN
+      - Put/Call
+    RecentPatentsResponse:
+      title: RecentPatentsResponse
+      description: JSON Response structure for recent patents endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/Patent'
+    ExecCompEntry:
+      title: ExecCompEntry
+      description: Executive compensation entry.
+      type: object
+      properties:
+        CIK:
+          title: Cik
+          type: string
+        Name:
+          title: Name
+          type: string
+        Role:
+          title: Role
+          type: string
+        Year:
+          title: Year
+          type: integer
+        Salary:
+          title: Salary
+          type: number
+        Bonus:
+          title: Bonus
+          type: number
+        StockAndOptionAwards:
+          title: Stockandoptionawards
+          type: number
+        TotalCompensation:
+          title: Totalcompensation
+          type: number
+        filerName:
+          title: Filername
+          type: string
+        fileDate:
+          title: Filedate
+          type: string
+        uploaded:
+          title: Uploaded
+          type: string
+          format: date-time
+    TodayEventsBetaResponse:
+      title: TodayEventsBetaResponse
+      description: JSON Response structure for today events beta endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/TodayEventBeta'
+    SEC13FChangesEntry:
+      title: SEC13FChangesEntry
+      description: Base pydantic model used to hold standard config.
+      type: object
+      properties:
+        Date:
+          title: Date
+          description: Filing date (expressed in ms since Epoch CST)
+          type: string
+          format: date-time
+        ReportPeriod:
+          title: Reportperiod
+          description: Reporting period end date (expressed in ms since Epoch CST)
+          type: string
+          format: date-time
+        Ticker:
+          title: Ticker
+          description: Company ticker
+          type: string
+        Fund:
+          title: Fund
+          description: Name of the institution
+          type: string
+        Change:
+          title: Change
+          description: Value (USD) of fund's purchases/sales over last quarter
+          type: number
+        Change_Share:
+          title: Change Share
+          type: number
+        Change_Pct:
+          title: Change Pct
+          type: number
+        Held:
+          title: Held
+          type: number
+        Held_Normalized:
+          title: Held Normalized
+          type: number
+        Close:
+          title: Close
+          description: Closing price of the company's stock on the filing date
+          type: number
+      required:
+      - ReportPeriod
+      - Ticker
+      - Fund
+      - Held
+      - Held_Normalized
+    TopShareholdersOptionEntry:
+      title: TopShareholdersOptionEntry
+      description: Top shareholders option entry.
+      type: object
+      properties:
+        owner_name:
+          title: Owner Name
+          type: string
+        owner_title:
+          title: Owner Title
+          type: string
+        option_type:
+          title: Option Type
+          type: string
+        underlying_shares:
+          title: Underlying Shares
+          type: integer
+    AppRating:
+      title: AppRating
+      description: Base pydantic model used to hold standard config.
+      type: object
+      properties:
+        Ticker:
+          title: Ticker
+          description: Company ticker of app's publisher
+          type: string
+        App:
+          title: App
+          description: App's title
+          type: string
+        Created:
+          title: Created
+          description: Initial publication date of app
+          type: string
+          format: date-time
+        Publisher:
+          title: Publisher
+          description: Full name of app's publisher
+          type: string
+        Rating:
+          title: Rating
+          description: Average rating (on a 0-5 scale) of app
+          type: number
+        Count:
+          title: Count
+          description: Total number of reviews of app
+          type: integer
+        Time:
+          title: Time
+          description: Time that this row of ratings data was scraped
+          type: string
+          format: date-time
+      required:
+      - Ticker
+      - App
+      - Created
+      - Publisher
+      - Rating
+      - Count
+      - Time
+    SEC13FResponse:
+      title: SEC13FResponse
+      description: JSON Response structure for sec13f endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/SEC13FEntry'
+    PatentMomentum:
+      title: PatentMomentum
+      description: Patent drift information.
+      type: object
+      properties:
+        ticker:
+          title: Ticker
+          description: Company ticker
+          type: string
+        date:
+          title: Date
+          description: Date
+          type: string
+          format: date-time
+        momentum:
+          title: Momentum
+          description: Proprietary metric quantifying recent performance of a company's tech peers
+          type: number
+      required:
+      - ticker
+      - date
+      - momentum
+    AppRatingResponse:
+      title: AppRatingResponse
+      description: JSON Response structure for app rating endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/AppRating'
+    Form4Response:
+      title: Form4Response
+      description: JSON Response structure for form4 (insiders) endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/Form4Entry'
+    HistoricalExecCompResponse:
+      title: HistoricalExecCompResponse
+      description: JSON Response structure for executive compensation endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/ExecCompEntry'
+    CNBCTrade:
+      title: CNBCTrade
+      description: CNBC Trade model.
+      type: object
+      properties:
+        Ticker:
+          title: Ticker
+          type: string
+        Date:
+          title: Date
+          type: string
+          format: date-time
+        Notes:
+          title: Notes
+          type: string
+        Direction:
+          title: Direction
+          type: string
+        Traders:
+          title: Traders
+          type: string
+        Upload_Time:
+          title: Upload Time
+          type: string
+          format: date-time
+      required:
+      - Date
+      - Upload_Time
+    Patent:
+      title: Patent
+      description: Patent information from all patents table.
+      type: object
+      properties:
+        Date:
+          title: Date
+          description: Publication date
+          type: string
+          format: date-time
+        IPC:
+          title: Ipc
+          description: The patent's IPC (International Patent Classification) code
+          type: string
+        Title:
+          title: Title
+          description: Title of the patent
+          type: string
+        Claims:
+          title: Claims
+          description: The number of claims listed in the given patent
+          type: number
+        Abstract:
+          title: Abstract
+          description: The full-text of the patent's abstract
+          type: string
+        Ticker:
+          title: Ticker
+          description: Company ticker
+          type: string
+        PatentNumber:
+          title: Patentnumber
+          type: string
+      required:
+      - Date
+      - Ticker
+      - PatentNumber
+    LiveQuiverNewsResponse:
+      title: LiveQuiverNewsResponse
+      description: JSON Response structure for live Quiver News endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/LiveQuiverNewsEntry'
+    Form4Entry:
+      title: Form4Entry
+      description: Form4 entry information.
+      type: object
+      properties:
+        Ticker:
+          title: Ticker
+          description: Company ticker
+          type: string
+        Date:
+          title: Date
+          description: Transaction date
+          type: string
+          format: date-time
+        Name:
+          title: Name
+          description: Name of transactor
+          type: string
+        AcquiredDisposedCode:
+          title: Acquireddisposedcode
+          description: Indicates whether transaction was share acquisition or disposal
+          type: string
+        TransactionCode:
+          title: Transactioncode
+          description: 'Indicates type of transaction (see more: https://www.sec.gov/files/forms-3-4-5.pdf)'
+          type: string
+        Shares:
+          title: Shares
+          description: Number of shares transacted
+          type: number
+        PricePerShare:
+          title: Pricepershare
+          description: Reported price per share transacted
+          type: number
+        SharesOwnedFollowing:
+          title: Sharesownedfollowing
+          description: Number of shares owned by insider following transaction
+          type: number
+        fileDate:
+          title: Filedate
+          description: Time that the transaction was filed (and became publicly available)
+          type: string
+          format: date-time
+        officerTitle:
+          title: Officertitle
+          description: Corporate title of the transactor
+          type: string
+        isDirector:
+          title: Isdirector
+          description: Whether the transactor is a director of the company
+          type: boolean
+        isOfficer:
+          title: Isofficer
+          description: Whether the transactor is an officer of the company
+          type: boolean
+        isTenPercentOwner:
+          title: Istenpercentowner
+          description: Whether the transactor is a 10% owner of the company
+          type: boolean
+        isOther:
+          title: Isother
+          description: The transactor is not a director, officer, or 10% owner
+          type: boolean
+        directOrIndirectOwnership:
+          title: Directorindirectownership
+          description: Ownership type ('D' or 'I')
+          type: string
+        uploaded:
+          title: Uploaded
+          description: Time that the transaction was uploaded by Quiver
+          type: string
+          format: date-time
+      required:
+      - Date
+      - Name
+      - AcquiredDisposedCode
+      - TransactionCode
+      - fileDate
+    HistoricalEventBeta:
+      title: HistoricalEventBeta
+      description: Base pydantic model used to hold standard config.
+      type: object
+      properties:
+        Ticker:
+          title: Ticker
+          type: string
+        FirstEventBeta:
+          title: Firsteventbeta
+          type: number
+        FirstEventOdds:
+          title: Firsteventodds
+          type: number
+        EventName:
+          title: Eventname
+          default: PresidentialElection2020
+          type: string
+        FirstEventName:
+          title: Firsteventname
+          default: TrumpVictory
+          type: string
+        SecondEventName:
+          title: Secondeventname
+          default: BidenVictory
+          type: string
+        SecondEventBeta:
+          title: Secondeventbeta
+          type: number
+        SecondEventOdds:
+          title: Secondeventodds
+          type: number
+        Date:
+          title: Date
+          description: Date
+          type: string
+          format: date-time
+      required:
+      - Ticker
+      - FirstEventOdds
+      - Date
+    HistoricalPatentsResponse:
+      title: HistoricalPatentsResponse
+      description: JSON Response structure for historical patent endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/Patent'
+    LiveTopShareholdersResponse:
+      title: LiveTopShareholdersResponse
+      description: JSON Response structure for live top shareholders endpoint.
+      type: object
+      properties:
+        ownership:
+          title: Ownership
+          type: array
+          items:
+            $ref: '#/components/schemas/TopShareholdersEntry'
+        ownership_options:
+          title: Ownership Options
+          type: array
+          items:
+            $ref: '#/components/schemas/TopShareholdersOptionEntry'
+    RecentCNBCResponse:
+      title: RecentCNBCResponse
+      description: JSON Response structure for recent cnbc trades endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/CNBCTrade'
+    LiveQuiverNewsEntry:
+      title: LiveQuiverNewsEntry
+      description: Live Quiver News entry.
+      type: object
+      properties:
+        url:
+          title: Url
+          type: string
+        datetime:
+          title: Datetime
+          type: string
+        headline:
+          title: Headline
+          type: string
+        summary:
+          title: Summary
+          type: string
+        category:
+          title: Category
+          type: string
+        image:
+          title: Image
+          type: string
+      required:
+      - datetime
+    HistoricalEventsBetaResponse:
+      title: HistoricalEventsBetaResponse
+      description: JSON Response structure for historical events beta endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/HistoricalEventBeta'
+    PatentDrift:
+      title: PatentDrift
+      description: Patent drift information.
+      type: object
+      properties:
+        ticker:
+          title: Ticker
+          description: Company ticker
+          type: string
+        date:
+          title: Date
+          description: Date
+          type: string
+          format: date-time
+        drift:
+          title: Drift
+          description: Proprietary metric quantifying the extent of a company's recent technological changes
+          type: number
+      required:
+      - ticker
+      - date
+      - drift
+    SEC13FChangesResponse:
+      title: SEC13FChangesResponse
+      description: JSON Response structure for sec13f changes endpoint.
+      type: array
+      items:
+        anyOf:
+        - $ref: '#/components/schemas/SEC13FChangesEntry'
+        - $ref: '#/components/schemas/SEC13FChangesEntryMobile'
+    PatentDriftResponse:
+      title: PatentDriftResponse
+      description: JSON Response structure for patent drift endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/PatentDrift'
+  securitySchemes:
+    WebPlatformTokenAuth:
+      type: http
+      scheme: bearer
+x-refined-from:
+- schema.json
+- quiver-quantitative-openapi.json

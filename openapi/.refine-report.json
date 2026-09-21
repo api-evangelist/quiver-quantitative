@@ -1,0 +1,39 @@
+{
+  "provider": "quiver-quantitative",
+  "sources": [
+    "_original/schema.json",
+    "quiver-quantitative-openapi.json"
+  ],
+  "outputs": [
+    "quiver-quantitative-beta-api-openapi.yml",
+    "quiver-quantitative-tier-1-api-openapi.yml",
+    "quiver-quantitative-tier-2-api-openapi.yml",
+    "quiver-quantitative-tier-new-constructs-ratings-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/quiver-quantitative-openapi.json"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "schema.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "schema.json: tagged paths POST /beta/token/login/ -> Beta",
+    "schema.json: tagged paths POST /beta/token/logout/ -> Beta",
+    "schema.json: declared missing tag: Beta",
+    "schema.json: declared missing tag: Tier New Constructs Ratings",
+    "schema.json: multi-axis tagging (7 tags, 4 first tags, 1.96x duplication over 53 operations) \u2014 split on first tag, 51 operations narrowed",
+    "quiver-quantitative-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "quiver-quantitative-openapi.json: tagged paths POST /beta/token/login/ -> Beta",
+    "quiver-quantitative-openapi.json: tagged paths POST /beta/token/logout/ -> Beta",
+    "quiver-quantitative-openapi.json: declared missing tag: Beta",
+    "quiver-quantitative-openapi.json: declared missing tag: Tier New Constructs Ratings",
+    "quiver-quantitative-openapi.json: multi-axis tagging (7 tags, 4 first tags, 1.96x duplication over 53 operations) \u2014 split on first tag, 51 operations narrowed",
+    "tag 'Beta' spans 2 source specs (schema.json, quiver-quantitative-openapi.json): per-path servers applied",
+    "tag 'Tier 1' spans 2 source specs (schema.json, quiver-quantitative-openapi.json): per-path servers applied",
+    "tag 'Tier 2' spans 2 source specs (schema.json, quiver-quantitative-openapi.json): per-path servers applied",
+    "tag 'Tier New Constructs Ratings' spans 2 source specs (schema.json, quiver-quantitative-openapi.json): per-path servers applied",
+    "apis.yml register: written (+4 apis, 4 total)"
+  ],
+  "skipped": []
+}

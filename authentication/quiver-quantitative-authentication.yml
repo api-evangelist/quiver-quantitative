@@ -1,0 +1,12 @@
+generated: '2026-09-21'
+method: derived
+source: openapi/quiver-quantitative-openapi.json
+summary:
+  types:
+  - http
+schemes:
+- name: WebPlatformTokenAuth
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/quiver-quantitative-openapi.json

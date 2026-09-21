@@ -1,0 +1,214 @@
+generated: '2026-09-21'
+method: derived
+generator: derive-mcp-candidate.py
+source:
+- openapi/quiver-quantitative-openapi.json
+status: candidate
+deployment:
+  mode: none
+  auth: unknown
+  verified: probed
+note: No MCP server was found. The pre-flight posted tools/list to /mcp on www.quiverquant.com, api.quiverquant.com, forum.quiverquant.com, video.quiverquant.com;
+  verdict absent. Candidate tools below are derived from the 53 operation(s) in the provider's own OpenAPI (40 listed); they describe what a server
+  WOULD expose, not one that exists.
+tools:
+- name: auth_premium_retrieve
+  operationId: auth_premium_retrieve
+  method: GET
+  path: /beta/auth/premium
+  description: Premium Authentication
+- name: bulk_congress_politicians_retrieve
+  operationId: bulk_congress_politicians_retrieve
+  method: GET
+  path: /beta/bulk/congress/politicians
+  description: Bulk Congress Politicians
+- name: bulk_congresstrading_retrieve
+  operationId: bulk_congresstrading_retrieve
+  method: GET
+  path: /beta/bulk/congresstrading
+  description: Bulk Congress Trading
+- name: bulk_corporatedonors_retrieve
+  operationId: bulk_corporatedonors_retrieve
+  method: GET
+  path: /beta/bulk/corporatedonors
+  description: Bulk Corporate Donors
+- name: bulk_trumpstocktrades_retrieve
+  operationId: bulk_trumpstocktrades_retrieve
+  method: GET
+  path: /beta/bulk/trumpstocktrades
+  description: Bulk Trump Stock Trades
+- name: coins_retrieve
+  operationId: coins_retrieve
+  method: GET
+  path: /beta/coins
+  description: Coins
+- name: companies_retrieve
+  operationId: companies_retrieve
+  method: GET
+  path: /beta/companies
+  description: Companies
+- name: funds_retrieve
+  operationId: funds_retrieve
+  method: GET
+  path: /beta/funds
+  description: Funds
+- name: historical_allpatents_retrieve
+  operationId: historical_allpatents_retrieve
+  method: GET
+  path: /beta/historical/allpatents/{ticker}
+  description: Historical Patents
+- name: historical_congresstrading_retrieve
+  operationId: historical_congresstrading_retrieve
+  method: GET
+  path: /beta/historical/congresstrading/{ticker}
+  description: Historical Congress Trading
+- name: historical_corporatedonors_retrieve
+  operationId: historical_corporatedonors_retrieve
+  method: GET
+  path: /beta/historical/corporatedonors/{ticker}
+  description: Historical Corporate Donors by Ticker
+- name: historical_eventsbeta_retrieve
+  operationId: historical_eventsbeta_retrieve
+  method: GET
+  path: /beta/historical/eventsbeta/{ticker}
+  description: Historical Events Beta
+- name: historical_executivecompensation_retrieve
+  operationId: historical_executivecompensation_retrieve
+  method: GET
+  path: /beta/historical/executivecompensation/{ticker}
+  description: Historical Executive Compensation
+- name: historical_govcontracts_retrieve
+  operationId: historical_govcontracts_retrieve
+  method: GET
+  path: /beta/historical/govcontracts/{ticker}
+  description: Historical Gov Contracts
+- name: historical_govcontractsall_retrieve
+  operationId: historical_govcontractsall_retrieve
+  method: GET
+  path: /beta/historical/govcontractsall/{ticker}
+  description: Historical Gov Contracts All
+- name: historical_housetrading_retrieve
+  operationId: historical_housetrading_retrieve
+  method: GET
+  path: /beta/historical/housetrading/{ticker}
+  description: Historical House Trading
+- name: historical_lobbying_retrieve
+  operationId: historical_lobbying_retrieve
+  method: GET
+  path: /beta/historical/lobbying/{ticker}
+  description: Historical Lobbying
+- name: historical_offexchange_retrieve
+  operationId: historical_offexchange_retrieve
+  method: GET
+  path: /beta/historical/offexchange/{ticker}
+  description: Historical Off-Exchange
+- name: historical_senatetrading_retrieve
+  operationId: historical_senatetrading_retrieve
+  method: GET
+  path: /beta/historical/senatetrading/{ticker}
+  description: Historical Senate Trading
+- name: ignoredtickers_retrieve
+  operationId: ignoredtickers_retrieve
+  method: GET
+  path: /beta/ignoredtickers
+  description: Ignored Tickers
+- name: live_allpatents_retrieve
+  operationId: live_allpatents_retrieve
+  method: GET
+  path: /beta/live/allpatents
+  description: Recent Patents
+- name: live_appratings_retrieve
+  operationId: live_appratings_retrieve
+  method: GET
+  path: /beta/live/appratings
+  description: App Ratings
+- name: live_bill_summaries_retrieve
+  operationId: live_bill_summaries_retrieve
+  method: GET
+  path: /beta/live/bill_summaries
+  description: Recent Bill Summaries
+- name: live_cnbc_retrieve
+  operationId: live_cnbc_retrieve
+  method: GET
+  path: /beta/live/cnbc
+  description: Recent CNBC Trades
+- name: live_congress_politicians_retrieve
+  operationId: live_congress_politicians_retrieve
+  method: GET
+  path: /beta/live/congress/politicians
+  description: Live Congress Politicians
+- name: live_congress_stock_holdings_retrieve
+  operationId: live_congress_stock_holdings_retrieve
+  method: GET
+  path: /beta/live/congress_stock_holdings
+  description: Live Congress Stock Holdings
+- name: live_congressholdings_retrieve
+  operationId: live_congressholdings_retrieve
+  method: GET
+  path: /beta/live/congressholdings
+  description: Live Congress Holdings
+- name: live_congresstrading_retrieve
+  operationId: live_congresstrading_retrieve
+  method: GET
+  path: /beta/live/congresstrading
+  description: Live Congress Trading
+- name: live_earningsdistortionscores_retrieve
+  operationId: live_earningsdistortionscores_retrieve
+  method: GET
+  path: /beta/live/earningsdistortionscores/{ticker}
+  description: Earnings Distortion Scores
+- name: live_flights_retrieve
+  operationId: live_flights_retrieve
+  method: GET
+  path: /beta/live/flights
+  description: Live Flights
+- name: live_govcontracts_retrieve
+  operationId: live_govcontracts_retrieve
+  method: GET
+  path: /beta/live/govcontracts
+  description: Recent Gov Contracts
+- name: live_govcontractsall_retrieve
+  operationId: live_govcontractsall_retrieve
+  method: GET
+  path: /beta/live/govcontractsall
+  description: Recent Gov Contracts All
+- name: live_housetrading_retrieve
+  operationId: live_housetrading_retrieve
+  method: GET
+  path: /beta/live/housetrading
+  description: Recent House Trading
+- name: live_insiders_retrieve
+  operationId: live_insiders_retrieve
+  method: GET
+  path: /beta/live/insiders
+  description: Live Insider Trading
+- name: live_legislation_retrieve
+  operationId: live_legislation_retrieve
+  method: GET
+  path: /beta/live/legislation
+  description: Recent Legislation
+- name: live_lobbying_retrieve
+  operationId: live_lobbying_retrieve
+  method: GET
+  path: /beta/live/lobbying
+  description: Live Lobbying
+- name: live_offexchange_retrieve
+  operationId: live_offexchange_retrieve
+  method: GET
+  path: /beta/live/offexchange
+  description: Live Off-Exchange
+- name: live_patentdrift_retrieve
+  operationId: live_patentdrift_retrieve
+  method: GET
+  path: /beta/live/patentdrift
+  description: Patent Drift
+- name: live_patentmomentum_retrieve
+  operationId: live_patentmomentum_retrieve
+  method: GET
+  path: /beta/live/patentmomentum
+  description: Patent Momentum
+- name: live_polymarkettrades_retrieve
+  operationId: live_polymarkettrades_retrieve
+  method: GET
+  path: /beta/live/polymarkettrades
+  description: Polymarket Top Trades

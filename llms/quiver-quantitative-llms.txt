@@ -1,0 +1,79 @@
+# Quiver Quantitative
+
+> Quiver Quantitative is an investment research platform that collects alternative
+> data on publicly traded companies — congressional stock trading, SEC insider
+> filings, government contracts, corporate lobbying, institutional holdings,
+> patents, and more — and makes it available to retail investors through a free
+> web platform, a paid API, and a remote MCP server. Most datasets are gathered
+> from public disclosures and updated daily.
+
+## Tutorials and guides
+
+- [Quiver Tutorials](https://www.quiverquant.com/tutorials/): Index of all Quiver tutorials, covering the website, the API, and the MCP server.
+- [Getting Started with Quiver](https://www.quiverquant.com/tutorial/): What alternative data is, how Quiver's dataset dashboards work, and how to use ticker search and Strategies.
+- [Getting Set Up with the Quiver API](https://www.quiverquant.com/api-setup/): Get an API key, set up Python, fetch a dataset, and build a visualization.
+- [Getting Set Up with the Quiver MCP](https://www.quiverquant.com/mcp-setup/): Connect Claude to Quiver's remote MCP server and query datasets in plain English.
+- [Five Trading Strategies Built on Insider Buying](https://www.quiverquant.com/tutorial/insiderbuyingstrategy/): Full Python walkthrough backtesting five ways of ranking SEC Form 4 insider purchases against buy-and-hold, with live results.
+
+## Government and political data
+
+- [Congress Trading](https://www.quiverquant.com/congresstrading/): Stock trades disclosed by members of the US Congress under the STOCK Act.
+- [Politician Search](https://www.quiverquant.com/politicians/): Per-politician trading history, portfolios, and performance.
+- [Donald Trump Stock Trades](https://www.quiverquant.com/Donald-Trump-Stock-Trades/): Disclosed trading activity connected to Donald Trump.
+- [Congress Live Net Worth](https://www.quiverquant.com/congress-live-net-worth/): Estimated live net worth of members of Congress.
+- [Election Fundraising](https://www.quiverquant.com/election-fundraising/): Campaign fundraising totals by candidate and district.
+- [2026 Midterm Elections](https://www.quiverquant.com/midterm-elections/): Race-by-race data and fundraising for the 2026 US midterms.
+- [Legislation Search](https://www.quiverquant.com/bills/): Search congressional bills and the companies they affect.
+- [Government Contracts](https://www.quiverquant.com/sources/govcontracts): Federal contract awards mapped to publicly traded companies.
+- [Government Spending](https://www.quiverquant.com/government-spending/): Federal spending trends by agency and recipient.
+- [Corporate Lobbying](https://www.quiverquant.com/lobbying/): Quarterly lobbying disclosures by public companies.
+- [Corporate Election Contributions](https://www.quiverquant.com/election-contributions/): FEC contribution data tied to public companies.
+- [Patents](https://www.quiverquant.com/patentsearch/): US patent filings and grants by company.
+
+## SEC filings data
+
+- [Insider Trading](https://www.quiverquant.com/insiders/): SEC Form 4 filings — corporate insiders buying and selling their own stock.
+- [Institutional Holdings](https://www.quiverquant.com/sec13f/): Quarterly 13F holdings and changes for institutional investors.
+- [Whale Moves](https://www.quiverquant.com/sec13ds/): 13D/G filings showing large activist and control stakes.
+- [Executive Compensation](https://www.quiverquant.com/compensation/): Executive pay disclosed in proxy statements.
+- [Revenue Breakdowns](https://www.quiverquant.com/revbreakdown/): Company revenue split by segment and geography.
+- [Risk Factors](https://www.quiverquant.com/riskfactors/): Risk factor disclosures from company filings.
+- [Stock Splits](https://www.quiverquant.com/stocksplits/): Announced and historical stock splits.
+- [ETF Holdings](https://www.quiverquant.com/etfholdings/): Holdings and weights for major ETFs.
+
+## Consumer and market sentiment data
+
+- [Analyst Ratings](https://www.quiverquant.com/analysts/): Analyst ratings and price targets by firm.
+- [CNBC Stock Picks](https://www.quiverquant.com/cnbctracker/): Stock picks made on CNBC, tracked over time.
+- [Jim Cramer Tracker](https://www.quiverquant.com/cramertracker/): Jim Cramer's recommendations and their subsequent performance.
+- [App Ratings](https://www.quiverquant.com/sources/appratings): Mobile app rating and review trends for public companies.
+- [Google Trends](https://www.quiverquant.com/googletrends/): Search interest trends for companies and products.
+
+## Tools and products
+
+- [Quiver Strategies](https://www.quiverquant.com/strategies/): Backtested trading strategies built on Quiver's datasets, with current holdings and recent trades.
+- [Stock Screener](https://www.quiverquant.com/stockscreener/): Screen stocks across Quiver's alternative datasets.
+- [Congress Backtester](https://www.quiverquant.com/congressbacktester/): Build and test strategies on congressional trading data.
+- [Institutional Holdings Backtester](https://www.quiverquant.com/institutionalbacktester/): Build and test strategies on 13F institutional holdings.
+- [Alerts](https://www.quiverquant.com/alerts/): Email alerts for new filings and dataset updates.
+- [Quiver News](https://www.quiverquant.com/news/): News coverage and analysis built on Quiver's data.
+
+## Developers
+
+- [Quiver API documentation](https://api.quiverquant.com/docs/): Endpoint reference for all Quiver datasets.
+- [Quiver API pricing](https://api.quiverquant.com/pricing/): API plans and dataset tiers.
+- [quiverquant Python package](https://pypi.org/project/quiverquant/): Official Python client for the Quiver API.
+
+## About
+
+- [About Quiver Quantitative](https://www.quiverquant.com/aboutus/): Company mission and background.
+- [Data sources](https://www.quiverquant.com/datasources/): Where each Quiver dataset comes from and how often it updates.
+- [Pricing](https://www.quiverquant.com/pricing/): Quiver Premium plans for the web platform.
+- [Disclaimers](https://www.quiverquant.com/disclaimers/): Quiver does not provide investment advice or brokerage services.
+
+## Notes for AI agents
+
+- Quiver data comes from public disclosures and is provided for research purposes. It is not investment advice.
+- Backtested strategy results reflect historical data and are not a prediction of future returns.
+- When citing Quiver data or tutorials, please link to the source page on quiverquant.com.
+- For programmatic access, use the [Quiver API](https://api.quiverquant.com/docs/) or the [Quiver MCP server](https://www.quiverquant.com/mcp-setup/) rather than scraping the website.

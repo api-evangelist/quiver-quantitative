@@ -1,23 +1,109 @@
 aid: quiver-quantitative
 name: Quiver Quantitative
-description: 'Quiver Quantitative is a company surfaced via the API Evangelist harvest backlog (source:
-  market-data) and added to the network as a stub for full-pipeline profiling.'
+image: https://www.quiverquant.com/static/images/site_preview.png
+description: Quiver Quantitative provides comprehensive political and financial data APIs, delivering real‑time and historical datasets on congressional
+  trading, insider transactions, lobbying, government contracts, election fundraising, and market‑moving events. Users can query datasets on politicians,
+  stocks, bills, and economic indicators, with subscription plans for analysts, journalists, and fintech developers.
 url: https://raw.githubusercontent.com/api-evangelist/quiver-quantitative/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:market-data
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-09-21 (modular-v1; was harvest)
 specificationVersion: '0.20'
 created: '2026-09-21'
 modified: '2026-09-21'
 tags:
 - Company
-apis: []
+- Data
+- Finance
+- Politics
+- API
+apis:
+- aid: quiver-quantitative:quiver-quantitative-beta-api
+  name: Quiver Quantitative Beta API
+  description: The Beta API from Quiver Quantitative — 2 operation(s) for beta.
+  humanURL: https://api.quiverquant.com/docs/
+  baseURL: https://api.quiverquant.com
+  tags:
+  - Beta
+  properties:
+  - type: OpenAPI
+    url: openapi/quiver-quantitative-beta-api-openapi.yml
+- aid: quiver-quantitative:quiver-quantitative-tier-1-api
+  name: Quiver Quantitative Tier 1 API
+  description: tier 1 endpoint
+  humanURL: https://api.quiverquant.com/docs/
+  baseURL: https://api.quiverquant.com
+  tags:
+  - Tier 1
+  properties:
+  - type: OpenAPI
+    url: openapi/quiver-quantitative-tier-1-api-openapi.yml
+- aid: quiver-quantitative:quiver-quantitative-tier-2-api
+  name: Quiver Quantitative Tier 2 API
+  description: tier 2 endpoint
+  humanURL: https://api.quiverquant.com/docs/
+  baseURL: https://api.quiverquant.com
+  tags:
+  - Tier 2
+  properties:
+  - type: OpenAPI
+    url: openapi/quiver-quantitative-tier-2-api-openapi.yml
+- aid: quiver-quantitative:quiver-quantitative-tier-new-constructs-ratings-api
+  name: Quiver Quantitative Tier New Constructs Ratings API
+  description: >-
+    The Tier New Constructs Ratings API from Quiver Quantitative — 1 operation(s) for tier new constructs
+    ratings.
+  humanURL: https://api.quiverquant.com/docs/
+  baseURL: https://api.quiverquant.com
+  tags:
+  - Tier New Constructs Ratings
+  properties:
+  - type: OpenAPI
+    url: openapi/quiver-quantitative-tier-new-constructs-ratings-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: TermsOfService
+  url: https://www.quiverquant.com/termsofservice/
+- type: PrivacyPolicy
+  url: https://www.quiverquant.com/privacypolicy/
+- type: AgenticAccess
+  url: agentic-access/quiver-quantitative-agentic-access.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DataModel
+  url: data-model/quiver-quantitative-data-model.yml
+- type: Conformance
+  url: conformance/quiver-quantitative-conformance.yml
+- type: Overlay
+  url: overlays/quiver-quantitative-openapi-overlay.yaml
+- type: LLMsTxt
+  url: llms/quiver-quantitative-llms.txt
+- type: Newsroom
+  url: https://www.quiverquant.com/news/
+- type: Authentication
+  url: authentication/quiver-quantitative-authentication.yml
+- type: DomainSecurity
+  url: security/quiver-quantitative-domain-security.yml
 - type: Website
   url: https://www.quiverquant.com/
+- type: Documentation
+  url: https://www.quiverquant.com/api/
+- type: APIReference
+  url: https://www.quiverquant.com/api/
+- type: Blog
+  url: https://www.quiverquant.com/blog/
+- type: Pricing
+  url: https://www.quiverquant.com/register/?next=pricing
+- type: SignUp
+  url: https://www.quiverquant.com/register/
+x-enrichment:
+  date: '2026-09-21'
+  status: enriched
+  artifacts_added: 14
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local

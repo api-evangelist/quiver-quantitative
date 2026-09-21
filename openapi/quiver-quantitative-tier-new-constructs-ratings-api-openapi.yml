@@ -1,0 +1,177 @@
+openapi: 3.2.0
+info:
+  title: Quiver Quantitative Tier New Constructs Ratings API
+  version: v1
+  contact:
+    name: 'Us: info@quiverquant.com'
+    email: info@quiverquant.com
+  license:
+    name: Terms of Service
+    url: https://www.quiverquant.com/termsofservice/
+  description: 'Operations tagged Tier New Constructs Ratings across 2 of this provider''s published API definitions: schema.json, quiver-quantitative-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.quiverquant.com
+tags:
+- name: Tier New Constructs Ratings
+paths:
+  /beta/live/earningsdistortionscores/{ticker}:
+    get:
+      operationId: live_earningsdistortionscores_retrieve
+      description: 'Access New Constructs'' detailed ratings for stocks, ETFs, and mutual funds.
+
+
+        Ratings are derived from proprietary analysis of SEC filings and cover Overall Risk/Reward, Economic vs. Reported EPS, ROIC, FCF Yield, Price-to-Economic Book Value, Growth Appreciation Period (GAP), Portfolio quality, Total Annual Costs, and Cash Allocation.
+
+
+        Data is updated daily.'
+      summary: Earnings Distortion Scores
+      parameters:
+      - in: path
+        name: ticker
+        schema:
+          type: string
+        description: Ticker for any given stock, ETF, or mutual fund
+        required: true
+      tags:
+      - Tier New Constructs Ratings
+      security:
+      - WebPlatformTokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EarningsDistortionScoresResponse'
+          description: ''
+    servers:
+    - url: https://api.quiverquant.com
+components:
+  schemas:
+    EarningsDistortionScoresResponse:
+      title: EarningsDistortionScoresResponse
+      description: JSON Response structure for earnings distortion scores endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/EarningsDistortionScore'
+    EarningsDistortionScore:
+      title: EarningsDistortionScore
+      description: Earnings distortion score model.
+      type: object
+      properties:
+        ticker_current:
+          title: Ticker Current
+          description: The ticker for the security on the dataset generation date.
+          type: string
+        company_name_current:
+          title: Company Name Current
+          description: The name of the company on the dataset generation date.
+          type: string
+        cik_current:
+          title: Cik Current
+          description: Central Index Key on the dataset generation date.
+          type: string
+        stock_exchange_current:
+          title: Stock Exchange Current
+          description: The exchange on which a ticker trades on the dataset generation date.
+          type: string
+        market_identifier_code_current:
+          title: Market Identifier Code Current
+          description: The market identifier code (MIC) for the exchange on which a ticker trades on the dataset generation date.
+          type: string
+        company_status_current:
+          title: Company Status Current
+          description: The trading status of the security on the dataset generation date.
+          type: string
+        ticker_on_event_date:
+          title: Ticker On Event Date
+          description: The ticker for the security on the event_date.
+          type: string
+        company_name_on_event_date:
+          title: Company Name On Event Date
+          description: The name of the company on the event_date.
+          type: string
+        cik_on_event_date:
+          title: Cik On Event Date
+          description: Central Index Key on the event_date.
+          type: string
+        stock_exchange_on_event_date:
+          title: Stock Exchange On Event Date
+          description: The exchange on which a ticker traded on the event_date.
+          type: string
+        market_identifier_code_on_event_date:
+          title: Market Identifier Code On Event Date
+          description: The market identifier code (MIC) for the exchange on which a ticker traded on event_date.
+          type: string
+        figi:
+          title: Figi
+          description: Financial Instrument Global Identifier
+          type: string
+        perm_id:
+          title: Perm Id
+          description: Refinitiv Permanent Identifier
+          type: string
+        lei:
+          title: Lei
+          description: Legal Entity Identifier
+          type: string
+        event_date:
+          title: Event Date
+          description: The date of the event that created new or revised data.
+          type: string
+          format: date-time
+        nc_publish_date_actual:
+          title: Nc Publish Date Actual
+          description: The date we published the data in this row to clients.
+          type: string
+        rating_overall:
+          title: Rating Overall
+          description: 'Our Overall rating for stocks is based on 5 component ratings: Economic vs Reported EPS, ROIC (Return on Invested Capital), FCF Yield, Price-to-Economic Book Value, and GAP (Growth Appreciation Period). Our Overall rating for ETFs also considers Total Annual Costs. Our Overall rating for mutual fund ratings also considers Total Annual Costs & Cash Allocation. We assign ratings as follows: Most Attractive (1 - best rating), Attractive (2), Neutral (3), Unattractive (4), Very Unattractive (5 - worst rating).'
+          type: number
+        rating_income_net_economic_profit:
+          title: Rating Income Net Economic Profit
+          description: 'Our Economic vs Reported EPS rating compares reported accounting income to the economic earnings of the company. We assign ratings as follows: Most Attractive (1 - best rating), Attractive (2), Neutral (3), Unattractive (4), Very Unattractive (5 - worst rating).'
+          type: number
+        rating_roic:
+          title: Rating Roic
+          description: 'Our Return on Invested Capital (ROIC) rating is based on the aggregate cash on cash returns of the company. We assign ratings as follows: Most Attractive (1 - best rating), Attractive (2), Neutral (3), Unattractive (4), Very Unattractive (5 - worst rating).'
+          type: number
+        rating_fcf_yield:
+          title: Rating Fcf Yield
+          description: '2-Year Average FCF (excl cash) Yield Rating measures the amount of cash available for distribution to all stakeholders relative to the total value of the enterprise. We assign ratings as follows: Most Attractive (1 - best rating), Attractive (2), Neutral (3), Unattractive (4), Very Unattractive (5 - worst rating).'
+          type: number
+        rating_price_to_ebv_ratio:
+          title: Rating Price To Ebv Ratio
+          description: 'Our Price-to-Economic Book Value rating is based on the growth expectations embedded in the stock price. We assign ratings as follows: Most Attractive (1 - best rating), Attractive (2), Neutral (3), Unattractive (4), Very Unattractive (5 - worst rating).'
+          type: number
+        rating_gap:
+          title: Rating Gap
+          description: 'Our GAP (Growth Appreciation Period) rating is based on the number of years of future profit growth required to justify the current valuation of the stock. We assign ratings as follows: Most Attractive (1 - best rating), Attractive (2), Neutral (3), Unattractive (4), Very Unattractive (5 - worst rating).'
+          type: number
+        rating_portfolio:
+          title: Rating Portfolio
+          description: 'Our Portfolio rating for ETFs and mutual funds is based on the aggregated stock ratings of the securities the fund holds as well as its allocation to cash. We assign ratings as follows: Most Attractive (1 - best rating), Attractive (2), Neutral (3), Unattractive (4), Very Unattractive (5 - worst rating).'
+          type: number
+        rating_total_annual_cost:
+          title: Rating Total Annual Cost
+          description: 'Our Total Annual Costs rating for ETFs and mutual funds is based on the all-in cost of a minimum investment in each fund assuming a 3-year holding period, the average holding period for mutual funds. We assign ratings as follows: Most Attractive (1 - best rating), Attractive (2), Neutral (3), Unattractive (4), Very Unattractive (5 - worst rating).'
+          type: number
+        rating_cash_allocation:
+          title: Rating Cash Allocation
+          description: 'Our Cash Allocation rating for mutual funds is based on the percent of the fund''s assets allocated to cash. We assign ratings as follows: Most Attractive (1 - best rating), Attractive (2), Neutral (3), Unattractive (4), Very Unattractive (5 - worst rating).'
+          type: number
+        new_score_ind:
+          title: New Score Ind
+          type: integer
+        old_score:
+          title: Old Score
+          type: number
+      required:
+      - ticker_current
+      - event_date
+  securitySchemes:
+    WebPlatformTokenAuth:
+      type: http
+      scheme: bearer
+x-refined-from:
+- schema.json
+- quiver-quantitative-openapi.json
