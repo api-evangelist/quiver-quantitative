@@ -17,6 +17,11 @@ tags:
 - Data
 - Finance
 - Politics
+tags_raw:
+- Company
+- Data
+- Finance
+- Politics
 - API
 apis:
 - aid: quiver-quantitative:quiver-quantitative-beta-api
