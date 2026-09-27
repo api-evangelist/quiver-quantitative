@@ -1,14 +1,14 @@
 openapi: 3.2.0
 info:
-  title: Quiver Quantitative Beta API
+  title: Quiver Beta API
   version: v1
+  description: Tap into the power of alternative data
   contact:
     name: 'Us: info@quiverquant.com'
     email: info@quiverquant.com
   license:
     name: Terms of Service
     url: https://www.quiverquant.com/termsofservice/
-  description: 'Operations tagged Beta across 2 of this provider''s published API definitions: schema.json, quiver-quantitative-openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.quiverquant.com
 tags:
@@ -43,8 +43,6 @@ paths:
       - Beta
       summary: Token login create
       x-summary-source: derived
-    servers:
-    - url: https://api.quiverquant.com
   /beta/token/logout/:
     post:
       operationId: token_logout_create
@@ -58,8 +56,6 @@ paths:
       - Beta
       summary: Token logout create
       x-summary-source: derived
-    servers:
-    - url: https://api.quiverquant.com
 components:
   schemas:
     TokenCreate:
@@ -73,6 +69,3 @@ components:
     WebPlatformTokenAuth:
       type: http
       scheme: bearer
-x-refined-from:
-- schema.json
-- quiver-quantitative-openapi.json

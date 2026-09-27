@@ -1,14 +1,14 @@
 openapi: 3.2.0
 info:
-  title: Quiver Quantitative Tier New Constructs Ratings API
+  title: Quiver Tier New Constructs Ratings API
   version: v1
+  description: Tap into the power of alternative data
   contact:
     name: 'Us: info@quiverquant.com'
     email: info@quiverquant.com
   license:
     name: Terms of Service
     url: https://www.quiverquant.com/termsofservice/
-  description: 'Operations tagged Tier New Constructs Ratings across 2 of this provider''s published API definitions: schema.json, quiver-quantitative-openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.quiverquant.com
 tags:
@@ -43,16 +43,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/EarningsDistortionScoresResponse'
           description: ''
-    servers:
-    - url: https://api.quiverquant.com
 components:
   schemas:
-    EarningsDistortionScoresResponse:
-      title: EarningsDistortionScoresResponse
-      description: JSON Response structure for earnings distortion scores endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/EarningsDistortionScore'
     EarningsDistortionScore:
       title: EarningsDistortionScore
       description: Earnings distortion score model.
@@ -168,10 +160,13 @@ components:
       required:
       - ticker_current
       - event_date
+    EarningsDistortionScoresResponse:
+      title: EarningsDistortionScoresResponse
+      description: JSON Response structure for earnings distortion scores endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/EarningsDistortionScore'
   securitySchemes:
     WebPlatformTokenAuth:
       type: http
       scheme: bearer
-x-refined-from:
-- schema.json
-- quiver-quantitative-openapi.json
