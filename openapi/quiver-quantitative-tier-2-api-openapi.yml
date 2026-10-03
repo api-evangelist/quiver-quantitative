@@ -525,6 +525,67 @@ paths:
       x-internal: true
 components:
   schemas:
+    PatentMomentum:
+      title: PatentMomentum
+      description: Patent drift information.
+      type: object
+      properties:
+        ticker:
+          title: Ticker
+          description: Company ticker
+          type: string
+        date:
+          title: Date
+          description: Date
+          type: string
+          format: date-time
+        momentum:
+          title: Momentum
+          description: Proprietary metric quantifying recent performance of a company's tech peers
+          type: number
+      required:
+      - ticker
+      - date
+      - momentum
+    ExecCompEntry:
+      title: ExecCompEntry
+      description: Executive compensation entry.
+      type: object
+      properties:
+        CIK:
+          title: Cik
+          type: string
+        Name:
+          title: Name
+          type: string
+        Role:
+          title: Role
+          type: string
+        Year:
+          title: Year
+          type: integer
+        Salary:
+          title: Salary
+          type: number
+        Bonus:
+          title: Bonus
+          type: number
+        StockAndOptionAwards:
+          title: Stockandoptionawards
+          type: number
+        TotalCompensation:
+          title: Totalcompensation
+          type: number
+        filerName:
+          title: Filername
+          type: string
+        fileDate:
+          title: Filedate
+          type: string
+        uploaded:
+          title: Uploaded
+          type: string
+          format: date-time
     TopShareholdersEntry:
       title: TopShareholdersEntry
       description: Top shareholders entry.
@@ -539,6 +600,81 @@ components:
         shares:
           title: Shares
           type: integer
+    Form4Response:
+      title: Form4Response
+      description: JSON Response structure for form4 (insiders) endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/Form4Entry'
+    HistoricalEventBeta:
+      title: HistoricalEventBeta
+      description: Base pydantic model used to hold standard config.
+      type: object
+      properties:
+        Ticker:
+          title: Ticker
+          type: string
+        FirstEventBeta:
+          title: Firsteventbeta
+          type: number
+        FirstEventOdds:
+          title: Firsteventodds
+          type: number
+        EventName:
+          title: Eventname
+          default: PresidentialElection2020
+          type: string
+        FirstEventName:
+          title: Firsteventname
+          default: TrumpVictory
+          type: string
+        SecondEventName:
+          title: Secondeventname
+          default: BidenVictory
+          type: string
+        SecondEventBeta:
+          title: Secondeventbeta
+          type: number
+        SecondEventOdds:
+          title: Secondeventodds
+          type: number
+        Date:
+          title: Date
+          description: Date
+          type: string
+          format: date-time
+      required:
+      - Ticker
+      - FirstEventOdds
+      - Date
+    CNBCTrade:
+      title: CNBCTrade
+      description: CNBC Trade model.
+      type: object
+      properties:
+        Ticker:
+          title: Ticker
+          type: string
+        Date:
+          title: Date
+          type: string
+          format: date-time
+        Notes:
+          title: Notes
+          type: string
+        Direction:
+          title: Direction
+          type: string
+        Traders:
+          title: Traders
+          type: string
+        Upload_Time:
+          title: Upload Time
+          type: string
+          format: date-time
+      required:
+      - Date
+      - Upload_Time
     SEC13FChangesEntry:
       title: SEC13FChangesEntry
       description: Base pydantic model used to hold standard config.
@@ -588,78 +724,67 @@ components:
       - Fund
       - Held
       - Held_Normalized
-    Form4Response:
-      title: Form4Response
-      description: JSON Response structure for form4 (insiders) endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/Form4Entry'
-    ExecCompEntry:
-      title: ExecCompEntry
-      description: Executive compensation entry.
+    TodayEventBeta:
+      title: TodayEventBeta
+      description: Base pydantic model used to hold standard config.
       type: object
       properties:
-        CIK:
-          title: Cik
+        Ticker:
+          title: Ticker
           type: string
-        Name:
-          title: Name
-          type: string
-        Role:
-          title: Role
-          type: string
-        Year:
-          title: Year
-          type: integer
-        Salary:
-          title: Salary
+        FirstEventBeta:
+          title: Firsteventbeta
           type: number
-        Bonus:
-          title: Bonus
+        FirstEventOdds:
+          title: Firsteventodds
           type: number
-        StockAndOptionAwards:
-          title: Stockandoptionawards
+        EventName:
+          title: Eventname
+          default: PresidentialElection2020
+          type: string
+        FirstEventName:
+          title: Firsteventname
+          default: TrumpVictory
+          type: string
+        SecondEventName:
+          title: Secondeventname
+          default: BidenVictory
+          type: string
+        SecondEventBeta:
+          title: Secondeventbeta
           type: number
-        TotalCompensation:
-          title: Totalcompensation
+        SecondEventOdds:
+          title: Secondeventodds
           type: number
-        filerName:
-          title: Filername
-          type: string
-        fileDate:
-          title: Filedate
-          type: string
-        uploaded:
-          title: Uploaded
-          type: string
-          format: date-time
-    RecentCNBCResponse:
-      title: RecentCNBCResponse
-      description: JSON Response structure for recent cnbc trades endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/CNBCTrade'
-    LiveTopShareholdersResponse:
-      title: LiveTopShareholdersResponse
-      description: JSON Response structure for live top shareholders endpoint.
+      required:
+      - Ticker
+      - FirstEventOdds
+    SEC13FChangesEntryMobile:
+      title: SEC13FChangesEntryMobile
+      description: Base pydantic model used to hold standard config.
       type: object
       properties:
-        ownership:
-          title: Ownership
-          type: array
-          items:
-            $ref: '#/components/schemas/TopShareholdersEntry'
-        ownership_options:
-          title: Ownership Options
-          type: array
-          items:
-            $ref: '#/components/schemas/TopShareholdersOptionEntry'
-    PatentMomentumResponse:
-      title: PatentMomentumResponse
-      description: JSON Response structure for patent momentum endpoint.
+        Ticker:
+          title: Ticker
+          description: Company ticker
+          type: string
+        Fund:
+          title: Fund
+          description: Name of the institution
+          type: string
+        Change:
+          title: Change
+          description: Value (USD) of fund's purchases/sales over last quarter
+          type: number
+      required:
+      - Ticker
+      - Fund
+    TodayEventsBetaResponse:
+      title: TodayEventsBetaResponse
+      description: JSON Response structure for today events beta endpoint.
       type: array
       items:
-        $ref: '#/components/schemas/PatentMomentum'
+        $ref: '#/components/schemas/TodayEventBeta'
     PatentDrift:
       title: PatentDrift
       description: Patent drift information.
@@ -682,31 +807,12 @@ components:
       - ticker
       - date
       - drift
-    LiveQuiverNewsEntry:
-      title: LiveQuiverNewsEntry
-      description: Live Quiver News entry.
-      type: object
-      properties:
-        url:
-          title: Url
-          type: string
-        datetime:
-          title: Datetime
-          type: string
-        headline:
-          title: Headline
-          type: string
-        summary:
-          title: Summary
-          type: string
-        category:
-          title: Category
-          type: string
-        image:
-          title: Image
-          type: string
-      required:
-      - datetime
+    RecentCNBCResponse:
+      title: RecentCNBCResponse
+      description: JSON Response structure for recent cnbc trades endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/CNBCTrade'
     Form4Entry:
       title: Form4Entry
       description: Form4 entry information.
@@ -785,74 +891,54 @@ components:
       - AcquiredDisposedCode
       - TransactionCode
       - fileDate
-    SEC13FChangesResponse:
-      title: SEC13FChangesResponse
-      description: JSON Response structure for sec13f changes endpoint.
-      type: array
-      items:
-        anyOf:
-        - $ref: '#/components/schemas/SEC13FChangesEntry'
-        - $ref: '#/components/schemas/SEC13FChangesEntryMobile'
-    HistoricalEventsBetaResponse:
-      title: HistoricalEventsBetaResponse
-      description: JSON Response structure for historical events beta endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/HistoricalEventBeta'
-    HistoricalPatentsResponse:
-      title: HistoricalPatentsResponse
-      description: JSON Response structure for historical patent endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/Patent'
-    PatentMomentum:
-      title: PatentMomentum
-      description: Patent drift information.
+    LiveQuiverNewsEntry:
+      title: LiveQuiverNewsEntry
+      description: Live Quiver News entry.
       type: object
       properties:
-        ticker:
-          title: Ticker
-          description: Company ticker
+        url:
+          title: Url
           type: string
-        date:
-          title: Date
-          description: Date
+        datetime:
+          title: Datetime
           type: string
-          format: date-time
-        momentum:
-          title: Momentum
-          description: Proprietary metric quantifying recent performance of a company's tech peers
-          type: number
+        headline:
+          title: Headline
+          type: string
+        summary:
+          title: Summary
+          type: string
+        category:
+          title: Category
+          type: string
+        image:
+          title: Image
+          type: string
       required:
-      - ticker
-      - date
-      - momentum
-    SEC13FChangesEntryMobile:
-      title: SEC13FChangesEntryMobile
-      description: Base pydantic model used to hold standard config.
+      - datetime
+    TopShareholdersOptionEntry:
+      title: TopShareholdersOptionEntry
+      description: Top shareholders option entry.
       type: object
       properties:
-        Ticker:
-          title: Ticker
-          description: Company ticker
+        owner_name:
+          title: Owner Name
           type: string
-        Fund:
-          title: Fund
-          description: Name of the institution
+        owner_title:
+          title: Owner Title
           type: string
-        Change:
-          title: Change
-          description: Value (USD) of fund's purchases/sales over last quarter
-          type: number
-      required:
-      - Ticker
-      - Fund
-    TodayEventsBetaResponse:
-      title: TodayEventsBetaResponse
-      description: JSON Response structure for today events beta endpoint.
+        option_type:
+          title: Option Type
+          type: string
+        underlying_shares:
+          title: Underlying Shares
+          type: integer
+    SEC13FResponse:
+      title: SEC13FResponse
+      description: JSON Response structure for sec13f endpoint.
       type: array
       items:
-        $ref: '#/components/schemas/TodayEventBeta'
+        $ref: '#/components/schemas/SEC13FEntry'
     AppRatingResponse:
       title: AppRatingResponse
       description: JSON Response structure for app rating endpoint.
@@ -896,76 +982,114 @@ components:
       - Date
       - Ticker
       - PatentNumber
-    TodayEventBeta:
-      title: TodayEventBeta
+    AppRating:
+      title: AppRating
       description: Base pydantic model used to hold standard config.
       type: object
       properties:
         Ticker:
           title: Ticker
+          description: Company ticker of app's publisher
           type: string
-        FirstEventBeta:
-          title: Firsteventbeta
-          type: number
-        FirstEventOdds:
-          title: Firsteventodds
-          type: number
-        EventName:
-          title: Eventname
-          default: PresidentialElection2020
+        App:
+          title: App
+          description: App's title
           type: string
-        FirstEventName:
-          title: Firsteventname
-          default: TrumpVictory
+        Created:
+          title: Created
+          description: Initial publication date of app
           type: string
-        SecondEventName:
-          title: Secondeventname
-          default: BidenVictory
+          format: date-time
+        Publisher:
+          title: Publisher
+          description: Full name of app's publisher
           type: string
-        SecondEventBeta:
-          title: Secondeventbeta
+        Rating:
+          title: Rating
+          description: Average rating (on a 0-5 scale) of app
           type: number
-        SecondEventOdds:
-          title: Secondeventodds
-          type: number
+        Count:
+          title: Count
+          description: Total number of reviews of app
+          type: integer
+        Time:
+          title: Time
+          description: Time that this row of ratings data was scraped
+          type: string
+          format: date-time
       required:
       - Ticker
-      - FirstEventOdds
-    PatentDriftResponse:
-      title: PatentDriftResponse
-      description: JSON Response structure for patent drift endpoint.
+      - App
+      - Created
+      - Publisher
+      - Rating
+      - Count
+      - Time
+    HistoricalEventsBetaResponse:
+      title: HistoricalEventsBetaResponse
+      description: JSON Response structure for historical events beta endpoint.
       type: array
       items:
-        $ref: '#/components/schemas/PatentDrift'
+        $ref: '#/components/schemas/HistoricalEventBeta'
     LiveQuiverNewsResponse:
       title: LiveQuiverNewsResponse
       description: JSON Response structure for live Quiver News endpoint.
       type: array
       items:
         $ref: '#/components/schemas/LiveQuiverNewsEntry'
-    TopShareholdersOptionEntry:
-      title: TopShareholdersOptionEntry
-      description: Top shareholders option entry.
-      type: object
-      properties:
-        owner_name:
-          title: Owner Name
-          type: string
-        owner_title:
-          title: Owner Title
-          type: string
-        option_type:
-          title: Option Type
-          type: string
-        underlying_shares:
-          title: Underlying Shares
-          type: integer
     RecentPatentsResponse:
       title: RecentPatentsResponse
       description: JSON Response structure for recent patents endpoint.
       type: array
       items:
         $ref: '#/components/schemas/Patent'
+    PatentMomentumResponse:
+      title: PatentMomentumResponse
+      description: JSON Response structure for patent momentum endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/PatentMomentum'
+    PatentDriftResponse:
+      title: PatentDriftResponse
+      description: JSON Response structure for patent drift endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/PatentDrift'
+    LiveTopShareholdersResponse:
+      title: LiveTopShareholdersResponse
+      description: JSON Response structure for live top shareholders endpoint.
+      type: object
+      properties:
+        ownership:
+          title: Ownership
+          type: array
+          items:
+            $ref: '#/components/schemas/TopShareholdersEntry'
+        ownership_options:
+          title: Ownership Options
+          type: array
+          items:
+            $ref: '#/components/schemas/TopShareholdersOptionEntry'
+    HistoricalPatentsResponse:
+      title: HistoricalPatentsResponse
+      description: JSON Response structure for historical patent endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/Patent'
+    SEC13FChangesResponse:
+      title: SEC13FChangesResponse
+      description: JSON Response structure for sec13f changes endpoint.
+      type: array
+      items:
+        anyOf:
+        - $ref: '#/components/schemas/SEC13FChangesEntry'
+        - $ref: '#/components/schemas/SEC13FChangesEntryMobile'
+    HistoricalExecCompResponse:
+      title: HistoricalExecCompResponse
+      description: JSON Response structure for executive compensation endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/ExecCompEntry'
     SEC13FEntry:
       title: SEC13FEntry
       description: Base pydantic model used to hold standard config.
@@ -1028,130 +1152,6 @@ components:
       - Shares
       - SH/PRN
       - Put/Call
-    HistoricalExecCompResponse:
-      title: HistoricalExecCompResponse
-      description: JSON Response structure for executive compensation endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/ExecCompEntry'
-    CNBCTrade:
-      title: CNBCTrade
-      description: CNBC Trade model.
-      type: object
-      properties:
-        Ticker:
-          title: Ticker
-          type: string
-        Date:
-          title: Date
-          type: string
-          format: date-time
-        Notes:
-          title: Notes
-          type: string
-        Direction:
-          title: Direction
-          type: string
-        Traders:
-          title: Traders
-          type: string
-        Upload_Time:
-          title: Upload Time
-          type: string
-          format: date-time
-      required:
-      - Date
-      - Upload_Time
-    AppRating:
-      title: AppRating
-      description: Base pydantic model used to hold standard config.
-      type: object
-      properties:
-        Ticker:
-          title: Ticker
-          description: Company ticker of app's publisher
-          type: string
-        App:
-          title: App
-          description: App's title
-          type: string
-        Created:
-          title: Created
-          description: Initial publication date of app
-          type: string
-          format: date-time
-        Publisher:
-          title: Publisher
-          description: Full name of app's publisher
-          type: string
-        Rating:
-          title: Rating
-          description: Average rating (on a 0-5 scale) of app
-          type: number
-        Count:
-          title: Count
-          description: Total number of reviews of app
-          type: integer
-        Time:
-          title: Time
-          description: Time that this row of ratings data was scraped
-          type: string
-          format: date-time
-      required:
-      - Ticker
-      - App
-      - Created
-      - Publisher
-      - Rating
-      - Count
-      - Time
-    HistoricalEventBeta:
-      title: HistoricalEventBeta
-      description: Base pydantic model used to hold standard config.
-      type: object
-      properties:
-        Ticker:
-          title: Ticker
-          type: string
-        FirstEventBeta:
-          title: Firsteventbeta
-          type: number
-        FirstEventOdds:
-          title: Firsteventodds
-          type: number
-        EventName:
-          title: Eventname
-          default: PresidentialElection2020
-          type: string
-        FirstEventName:
-          title: Firsteventname
-          default: TrumpVictory
-          type: string
-        SecondEventName:
-          title: Secondeventname
-          default: BidenVictory
-          type: string
-        SecondEventBeta:
-          title: Secondeventbeta
-          type: number
-        SecondEventOdds:
-          title: Secondeventodds
-          type: number
-        Date:
-          title: Date
-          description: Date
-          type: string
-          format: date-time
-      required:
-      - Ticker
-      - FirstEventOdds
-      - Date
-    SEC13FResponse:
-      title: SEC13FResponse
-      description: JSON Response structure for sec13f endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/SEC13FEntry'
   securitySchemes:
     WebPlatformTokenAuth:
       type: http
