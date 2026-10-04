@@ -1060,13 +1060,13 @@ paths:
       x-internal: true
 components:
   schemas:
-    CongressionalTrade:
-      title: CongressionalTrade
-      description: V1 congressional trade data structure.
+    SenateTrade:
+      title: SenateTrade
+      description: Represents a senate trade as represented by trading endpoints.
       type: object
       properties:
-        Representative:
-          title: Representative
+        Senator:
+          title: Senator
           description: Name of Congressperson who made the transaction
           type: string
         BioGuideID:
@@ -1078,8 +1078,8 @@ components:
           description: Date the transaction was reported
           type: string
           format: date-time
-        TransactionDate:
-          title: Transactiondate
+        Date:
+          title: Date
           description: Date the transaction took place
           type: string
           format: date-time
@@ -1137,217 +1137,230 @@ components:
           description: Percentage change in S&P 500 since the transaction date
           type: number
       required:
-      - Representative
+      - Senator
       - Party
-    Flight:
-      title: Flight
+    TickerData:
+      title: TickerData
       description: Base pydantic model used to hold standard config.
       type: object
       properties:
         Ticker:
           title: Ticker
           type: string
-        Date:
-          title: Date
-          type: string
-          format: date-time
-        DepartureCity:
-          title: Departurecity
-          type: string
-        ArrivalCity:
-          title: Arrivalcity
-          type: string
+        wsbMentionsWeekly:
+          title: Wsbmentionsweekly
+          type: number
+        wiki_change:
+          title: Wiki Change
+          type: number
+        twitter_change:
+          title: Twitter Change
+          type: number
+        congressBought:
+          title: Congressbought
+          type: boolean
+        congressSold:
+          title: Congresssold
+          type: boolean
       required:
       - Ticker
-      - Date
-    HistoricalSenateViewResponse:
-      title: HistoricalSenateViewResponse
-      description: Json response structure for historical senate view endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/SenateTrade'
-    TrumpStockTrade:
-      title: TrumpStockTrade
-      description: Stock trade entry as represented by the Trump stock trades endpoint.
+    BillSummary:
+      title: BillSummary
+      description: Base pydantic model used to hold standard config.
       type: object
       properties:
-        Ticker:
-          title: Ticker
-          description: Ticker symbol of the stock involved in the transaction
-          sa_column_kwargs:
-            name: Ticker
+        title:
+          title: Title
           type: string
-        Company:
-          title: Company
-          description: Name of the company for the stock involved in the transaction
-          sa_column_kwargs:
-            name: Company
+        congress:
+          title: Congress
+          type: integer
+        number:
+          title: Number
           type: string
-        Transaction:
-          title: Transaction
-          description: Type of transaction (e.g., Purchase, Sale)
-          sa_column_kwargs:
-            name: Transaction
+        originChamber:
+          title: Originchamber
           type: string
-        Amount:
-          title: Amount
-          description: Value of the stock transaction (USD)
-          sa_column_kwargs:
-            name: Amount
+        currentChamber:
+          title: Currentchamber
           type: string
-        Filed:
-          title: Filed
-          description: Date when the stock transaction was filed
-          sa_column_kwargs:
-            name: Filed
+        billType:
+          title: Billtype
           type: string
-          format: date-time
-        Traded:
-          title: Traded
-          description: Date when the stock was actually traded
-          sa_column_kwargs:
-            name: Traded
+        summary:
+          title: Summary
           type: string
-        ExcessReturn:
-          title: Excessreturn
-          description: Estimated return of stock compared to return of S&P 500 since the transaction date
-          sa_column_kwargs:
-            name: excess_return
-          type: number
-    HistoricalCorporateDonorsResponse:
-      title: HistoricalCorporateDonorsResponse
-      description: JSON Response structure for historical corporate donors endpoint.
+        url:
+          title: Url
+          type: string
+        lastAction:
+          title: Lastaction
+          type: string
+        lastActionDate:
+          title: Lastactiondate
+          type: string
+        ctid:
+          title: Ctid
+          type: string
+      required:
+      - title
+      - congress
+      - number
+      - originChamber
+      - billType
+      - summary
+      - url
+      - lastAction
+      - lastActionDate
+    TodayLegislationResponse:
+      title: TodayLegislationResponse
+      description: JSON Response structure for recent legislation endpoint.
       type: array
       items:
-        $ref: '#/components/schemas/CorporateDonorEntry'
-    AllCongressViewResponse:
-      title: AllCongressViewResponse
-      description: JSON Response structure for all congress view endpoint.
-      type: array
-      items:
-        anyOf:
-        - $ref: '#/components/schemas/CongressionalTradeV2'
-        - $ref: '#/components/schemas/CongressionalTrade'
-    TickerDataResponse:
-      title: TickerDataResponse
-      description: JSON Response structure for ticker data endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/TickerData'
-    CongressionalTradeV2:
-      title: CongressionalTradeV2
-      description: V2 congressional trade data structure.
+        $ref: '#/components/schemas/Legislation'
+    SenateTradeWithOptions:
+      title: SenateTradeWithOptions
+      description: Represents a senate trade with additional options.
       type: object
       properties:
-        Ticker:
-          title: Ticker
-          description: Ticker of shares transacted
-          type: string
-        TickerType:
-          title: Tickertype
-          description: 'Reported type of asset traded. Note: CS and ST are commonly used as abbreviated for common stock'
-          type: string
-        Company:
-          title: Company
-          description: RecentSenate
-          type: string
-        Traded:
-          title: Traded
-          description: Transaction date
-          type: string
-          format: date-time
-        Transaction:
-          title: Transaction
-          description: Purchase or Sale
-          type: string
-        Trade_Size_USD:
-          title: Trade Size Usd
-          description: Lower bound of transaction size ($). Congressional trades are reported as a range of values, this variable is the lower bound of that range
-          type: string
-        Status:
-          title: Status
-          description: Status of lawmaker’s position
-          type: string
-        Subholding:
-          title: Subholding
-          description: Reported subholding, if relevant
-          type: string
-        Description:
-          title: Description
-          description: Transaction description
-          type: string
-        Name:
-          title: Name
-          description: Name of congressperson who made the transaction
+        Senator:
+          title: Senator
+          description: Name of Congressperson who made the transaction
           type: string
         BioGuideID:
           title: Bioguideid
           description: BioGuide ID of the congressperson who made the transaction
           type: string
-        Filed:
-          title: Filed
-          description: Disclosure date
+        ReportDate:
+          title: Reportdate
+          description: Date the transaction was reported
           type: string
           format: date-time
-        Party:
-          title: Party
-          description: Party of the congressperson who made the transaction
+        Date:
+          title: Date
+          description: Date the transaction took place
+          type: string
+          format: date-time
+        Ticker:
+          title: Ticker
+          description: Ticker of shares transacted
+          type: string
+        Transaction:
+          title: Transaction
+          description: Purchase or Sale
+          type: string
+        Range:
+          title: Range
           type: string
         District:
           title: District
-          description: District of the congressperson who made the transaction
+          description: District of the congressperson
           type: string
-        Chamber:
-          title: Chamber
-          description: Senate or House
+        House:
+          title: House
+          description: Representatives or Senate
           type: string
-        Comments:
-          title: Comments
-          description: Any comments left by lawmaker
+        Amount:
+          title: Amount
+          description: Lower bound of transaction size ($). Congressional trades are reported as a range of values, this variable is the lower bound of that range
+          default: 0
           type: string
-        Quiver_Upload_Time:
-          title: Quiver Upload Time
-          description: Time that transaction was scraped and processed by Quiver
-          type: string
-          format: date-time
-        excess_return:
-          title: Excess Return
-          description: Estimated return of stock compared to return of S&P 500 since the transaction date
-          type: string
-        State:
-          title: State
+        Party:
+          title: Party
+          description: Political party of the congressperson who made the trade
           type: string
         last_modified:
           title: Last Modified
           description: Date that Quiver last updated the details of this transaction
           type: string
           format: date-time
+        Type:
+          title: Type
+          description: Stock or Stock Option
+          default: Stock
+          type: string
+        Description:
+          title: Description
+          description: Transaction description
+          type: string
+        ExcessReturn:
+          title: Excessreturn
+          description: Estimated return of stock compared to return of S&P 500 since the transaction date
+          type: number
+        PriceChange:
+          title: Pricechange
+          description: Percentage change in stock price since the transaction date
+          type: number
+        SPYChange:
+          title: Spychange
+          description: Percentage change in S&P 500 since the transaction date
+          type: number
       required:
-      - Traded
-      - Name
-      - BioGuideID
-      - Filed
+      - Senator
       - Party
-      - Chamber
-    StrategyHoldings:
-      title: StrategyHoldings
-      description: Base pydantic model used to hold standard config.
+    LiveCongressViewResponse:
+      title: LiveCongressViewResponse
+      description: JSON Response structure for live congress view endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/CongressionalTrade'
+    HistoricalGovContractsResponse:
+      title: HistoricalGovContractsResponse
+      description: JSON Response structure for historical gov contracts endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/GovContract'
+    HistoricalHouseViewResponse:
+      title: HistoricalHouseViewResponse
+      description: Json response structure for historical house view endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/HouseTrade'
+    GovContractAll:
+      title: GovContractAll
+      description: Gov contract information (all).
       type: object
       properties:
-        Strategy:
-          title: Strategy
+        Ticker:
+          title: Ticker
+          description: Company ticker
           type: string
         Date:
           title: Date
+          description: Announcement date
           type: string
           format: date-time
-        Holdings:
-          title: Holdings
+        Description:
+          title: Description
+          description: Contract description
+          type: string
+        Agency:
+          title: Agency
+          description: Awarding Agency Name
+          type: string
+        Amount:
+          title: Amount
+          description: Total dollars obligated under the given contract
+          type: number
+        action_date:
+          title: Action Date
+          description: Contract action date
+          type: string
+          format: date-time
+      required:
+      - Ticker
+      - Date
+      - action_date
+    Coin:
+      title: Coin
+      description: Base pydantic model used to hold standard config.
+      type: object
+      properties:
+        Coin:
+          title: Coin
           type: string
       required:
-      - Strategy
-      - Date
-      - Holdings
+      - Coin
     PolymarketTrade:
       title: PolymarketTrade
       description: A trade on Polymarket flagged as a large or unusual bet.
@@ -1464,12 +1477,577 @@ components:
       - estimated_amount
       - trade_time
       - uploaded
+    PolymarketTopTradesResponse:
+      title: PolymarketTopTradesResponse
+      description: JSON Response structure for the Polymarket large/unusual trades endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/PolymarketTrade'
+    HistoricalGovContractsAllResponse:
+      title: HistoricalGovContractsAllResponse
+      description: JSON Response structure for historical gov contracts all endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/GovContractAll'
+    StrategyHoldingsResponse:
+      title: StrategyHoldingsResponse
+      description: JSON Response structure for strategy holdings endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/StrategyHoldings'
+    TodayLobbyingResponse:
+      title: TodayLobbyingResponse
+      description: JSON Response structure for today lobbying endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/LobbyingRecord'
+    Company:
+      title: Company
+      description: Base pydantic model used to hold standard config.
+      type: object
+      properties:
+        Name:
+          title: Name
+          type: string
+        Ticker:
+          title: Ticker
+          type: string
+      required:
+      - Name
+      - Ticker
+    Personality:
+      title: Personality
+      description: CNBC stats model.
+      type: object
+      properties:
+        Name:
+          title: Name
+          type: string
+      required:
+      - Name
+    BulkCorporateDonorsResponse:
+      title: BulkCorporateDonorsResponse
+      description: JSON Response structure for bulk corporate donors endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/CorporateDonorEntry'
+    GovContract:
+      title: GovContract
+      description: Gov contract information (basic).
+      type: object
+      properties:
+        Ticker:
+          title: Ticker
+          description: Company ticker
+          type: string
+        Amount:
+          title: Amount
+          description: Total dollars obligated under the given contract
+          type: string
+        Qtr:
+          title: Qtr
+          description: Calendar quarter
+          type: integer
+        Year:
+          title: Year
+          description: Year of the contract announcement
+          type: integer
+      required:
+      - Ticker
+      - Amount
+      - Qtr
+      - Year
+    RSSData:
+      title: RSSData
+      description: Base pydantic model used to hold standard config.
+      type: object
+      properties:
+        Dataset:
+          title: Dataset
+          type: string
+        Ticker:
+          title: Ticker
+          type: string
+        Text:
+          title: Text
+          type: string
+        URL:
+          title: Url
+          type: string
+        Time:
+          title: Time
+          type: string
+          format: date-time
+      required:
+      - Dataset
+      - Ticker
+      - Text
+      - URL
+      - Time
+    TickerDataResponse:
+      title: TickerDataResponse
+      description: JSON Response structure for ticker data endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/TickerData'
+    HistoricalCorporateDonorsResponse:
+      title: HistoricalCorporateDonorsResponse
+      description: JSON Response structure for historical corporate donors endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/CorporateDonorEntry'
+    LiveRSSResponse:
+      title: LiveRSSResponse
+      description: JSON Response structure for live rss endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/RSSData'
+    RecentSenateViewResponse:
+      title: RecentSenateViewResponse
+      description: Json response structure for recent senate view endpoint.
+      type: array
+      items:
+        anyOf:
+        - $ref: '#/components/schemas/SenateTrade'
+        - $ref: '#/components/schemas/SenateTradeWithOptions'
+        - type: string
+    TrumpStockTrade:
+      title: TrumpStockTrade
+      description: Stock trade entry as represented by the Trump stock trades endpoint.
+      type: object
+      properties:
+        Ticker:
+          title: Ticker
+          description: Ticker symbol of the stock involved in the transaction
+          sa_column_kwargs:
+            name: Ticker
+          type: string
+        Company:
+          title: Company
+          description: Name of the company for the stock involved in the transaction
+          sa_column_kwargs:
+            name: Company
+          type: string
+        Transaction:
+          title: Transaction
+          description: Type of transaction (e.g., Purchase, Sale)
+          sa_column_kwargs:
+            name: Transaction
+          type: string
+        Amount:
+          title: Amount
+          description: Value of the stock transaction (USD)
+          sa_column_kwargs:
+            name: Amount
+          type: string
+        Filed:
+          title: Filed
+          description: Date when the stock transaction was filed
+          sa_column_kwargs:
+            name: Filed
+          type: string
+          format: date-time
+        Traded:
+          title: Traded
+          description: Date when the stock was actually traded
+          sa_column_kwargs:
+            name: Traded
+          type: string
+        ExcessReturn:
+          title: Excessreturn
+          description: Estimated return of stock compared to return of S&P 500 since the transaction date
+          sa_column_kwargs:
+            name: excess_return
+          type: number
+    Flight:
+      title: Flight
+      description: Base pydantic model used to hold standard config.
+      type: object
+      properties:
+        Ticker:
+          title: Ticker
+          type: string
+        Date:
+          title: Date
+          type: string
+          format: date-time
+        DepartureCity:
+          title: Departurecity
+          type: string
+        ArrivalCity:
+          title: Arrivalcity
+          type: string
+      required:
+      - Ticker
+      - Date
+    HistoricalLobbyingResponse:
+      title: HistoricalLobbyingResponse
+      description: JSON Response structure for historical lobbying endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/LobbyingRecord'
+    BillSummariesResponse:
+      title: BillSummariesResponse
+      description: JSON Response structure for bill summaries endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/BillSummary'
+    AllCongressViewResponse:
+      title: AllCongressViewResponse
+      description: JSON Response structure for all congress view endpoint.
+      type: array
+      items:
+        anyOf:
+        - $ref: '#/components/schemas/CongressionalTradeV2'
+        - $ref: '#/components/schemas/CongressionalTrade'
+    HistoricalCongressViewResponse:
+      title: HistoricalCongressViewResponse
+      description: JSON Response structure for historical congress view endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/CongressionalTrade'
+    IgnoredTickersResponse:
+      title: IgnoredTickersResponse
+      description: JSON Response structure for ignored tickers endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/IgnoredTicker'
+    TrumpStockTradesResponse:
+      title: TrumpStockTradesResponse
+      description: JSON Response structure for Trump stock trades endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/TrumpStockTrade'
+    StrategyHoldings:
+      title: StrategyHoldings
+      description: Base pydantic model used to hold standard config.
+      type: object
+      properties:
+        Strategy:
+          title: Strategy
+          type: string
+        Date:
+          title: Date
+          type: string
+          format: date-time
+        Holdings:
+          title: Holdings
+          type: string
+      required:
+      - Strategy
+      - Date
+      - Holdings
+    HouseTrade:
+      title: HouseTrade
+      description: Represents a house trade as represented by trading endpoints.
+      type: object
+      properties:
+        Representative:
+          title: Representative
+          description: Name of Congressperson who made the transaction
+          type: string
+        BioGuideID:
+          title: Bioguideid
+          description: BioGuide ID of the congressperson who made the transaction
+          type: string
+        ReportDate:
+          title: Reportdate
+          description: Date the transaction was reported
+          type: string
+          format: date-time
+        Date:
+          title: Date
+          description: Date the transaction took place
+          type: string
+          format: date-time
+        Ticker:
+          title: Ticker
+          description: Ticker of shares transacted
+          type: string
+        Transaction:
+          title: Transaction
+          description: Purchase or Sale
+          type: string
+        Range:
+          title: Range
+          type: string
+        District:
+          title: District
+          description: District of the congressperson
+          type: string
+        House:
+          title: House
+          description: Representatives or Senate
+          type: string
+        Amount:
+          title: Amount
+          description: Lower bound of transaction size ($). Congressional trades are reported as a range of values, this variable is the lower bound of that range
+          default: 0
+          type: string
+        Party:
+          title: Party
+          description: Political party of the congressperson who made the trade
+          type: string
+        last_modified:
+          title: Last Modified
+          description: Date that Quiver last updated the details of this transaction
+          type: string
+          format: date-time
+        TickerType:
+          title: Tickertype
+          description: 'Reported type of asset traded. Note: CS and ST are commonly used as abbreviated for common stock'
+          type: string
+        Description:
+          title: Description
+          description: Transaction description
+          type: string
+        ExcessReturn:
+          title: Excessreturn
+          description: Estimated return of stock compared to return of S&P 500 since the transaction date
+          type: number
+        PriceChange:
+          title: Pricechange
+          description: Percentage change in stock price since the transaction date
+          type: number
+        SPYChange:
+          title: Spychange
+          description: Percentage change in S&P 500 since the transaction date
+          type: number
+      required:
+      - Representative
+      - Party
+    IgnoredTicker:
+      title: IgnoredTicker
+      description: Base pydantic model used to hold standard config.
+      type: object
+      properties:
+        Ticker:
+          title: Ticker
+          type: string
+      required:
+      - Ticker
     PersonalitiesResponse:
       title: PersonalitiesResponse
       description: JSON Response structure for cnbc personalities endpoint.
       type: array
       items:
         $ref: '#/components/schemas/Personality'
+    CompaniesResponse:
+      title: CompaniesResponse
+      description: JSON Response structure for internal companies endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/Company'
+    LobbyingRecord:
+      title: LobbyingRecord
+      description: Lobbying information.
+      type: object
+      properties:
+        Date:
+          title: Date
+          description: Date that the lobbying spend was reported
+          type: string
+          format: date-time
+        Amount:
+          title: Amount
+          description: Size of spending instance (USD)
+          type: string
+        Client:
+          title: Client
+          description: Full name of the lobbying client
+          type: string
+        Issue:
+          title: Issue
+          description: Category of legislation that is being lobbied for
+          type: string
+        Specific_Issue:
+          title: Specific Issue
+          description: Specific piece of legislation being lobbied for
+          type: string
+        Registrant:
+          title: Registrant
+          description: Full name of the disclosure registrant
+          type: string
+        Ticker:
+          title: Ticker
+          description: Company ticker
+          type: string
+      required:
+      - Date
+      - Registrant
+      - Ticker
+    StrategyHoldingsInfrequent:
+      title: StrategyHoldingsInfrequent
+      description: Base pydantic model used to hold standard config.
+      type: object
+      properties:
+        Strategy:
+          title: Strategy
+          type: string
+        Date:
+          title: Date
+          type: string
+          format: date-time
+        Holdings:
+          title: Holdings
+          type: string
+        Upload_Date:
+          title: Upload Date
+          type: string
+        Rebalance_Date:
+          title: Rebalance Date
+          type: string
+      required:
+      - Strategy
+      - Date
+      - Holdings
+      - Upload_Date
+      - Rebalance_Date
+    PoliticianDetailEntry:
+      title: PoliticianDetailEntry
+      description: Unified politician entry for both congress members and candidates.
+      type: object
+      properties:
+        BioGuideID:
+          title: Bioguideid
+          type: string
+        CandidateID:
+          title: Candidateid
+          type: string
+        Name:
+          title: Name
+          type: string
+        Party:
+          title: Party
+          type: string
+        Chamber:
+          title: Chamber
+          type: string
+        State:
+          title: State
+          type: string
+        ImageURL:
+          title: Imageurl
+          type: string
+        TradeCount:
+          title: Tradecount
+          type: integer
+        TradeVolume:
+          title: Tradevolume
+          type: number
+        NetWorth:
+          title: Networth
+          type: number
+    TodayDPViewResponse:
+      title: TodayDPViewResponse
+      description: JSON Response structure for today lobbying endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/DPShortRecord'
+    LiveCongressStockHoldingsResponse:
+      title: LiveCongressStockHoldingsResponse
+      description: JSON Response structure for live congress stock holdings endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/CongressStockHolding'
+    CorporateDonorEntry:
+      title: CorporateDonorEntry
+      description: PAC corporate donor transaction.
+      type: object
+      properties:
+        BioGuideID:
+          title: Bioguideid
+          type: string
+        CandidateName:
+          title: Candidatename
+          type: string
+        CompanyCMTENM:
+          title: Companycmtenm
+          type: string
+        TransactionDate:
+          title: Transactiondate
+          type: string
+          format: date-time
+        TransactionAmount:
+          title: Transactionamount
+          type: integer
+        Ticker:
+          title: Ticker
+          type: string
+        CommitteeName:
+          title: Committeename
+          type: string
+        Cycle:
+          title: Cycle
+          type: integer
+        TransactionType:
+          title: Transactiontype
+          type: string
+        CompanyCMTEID:
+          title: Companycmteid
+          type: string
+        Uploaded:
+          title: Uploaded
+          type: string
+    BulkCongressPoliticiansResponse:
+      title: BulkCongressPoliticiansResponse
+      description: JSON Response structure for bulk congress politicians endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/PoliticianDetailEntry'
+    CongressHoldingsResponse:
+      title: CongressHoldingsResponse
+      description: Json response structure for enterprise congress holdings endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/HoldingsEntry'
+    CongressStockHolding:
+      title: CongressStockHolding
+      description: Represents a stock holding as represented by the live congress stock holdings endpoint.
+      type: object
+      properties:
+        BioGuideID:
+          title: Bioguideid
+          description: BioGuide ID of the congressperson holding the stock
+          type: string
+        Name:
+          title: Name
+          description: Name of the congressperson who made the transaction
+          type: string
+        Ticker:
+          title: Ticker
+          description: Ticker symbol of the stock held by the congressperson
+          type: string
+        CurrentHolding:
+          title: Currentholding
+          description: Estimated current holding of the stock by the congressperson (USD)
+          type: number
+        Allocation:
+          title: Allocation
+          description: Estimtated allocation of the stock in the congressperson's portfolio (percentage)
+          type: number
+      required:
+      - BioGuideID
+    RecentHouseViewResponse:
+      title: RecentHouseViewResponse
+      description: Json response structure for recent house view endpoint.
+      type: array
+      items:
+        anyOf:
+        - $ref: '#/components/schemas/HouseTradeWithOptions'
+        - type: string
+    HistoricalSenateViewResponse:
+      title: HistoricalSenateViewResponse
+      description: Json response structure for historical senate view endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/SenateTrade'
+    FundsResponse:
+      title: FundsResponse
+      description: JSON Response structure for funds endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/Fund'
     DPShortRecord:
       title: DPShortRecord
       description: New DPShort data model.
@@ -1502,56 +2080,296 @@ components:
       - OTC_Short
       - OTC_Total
       - DPI
-    CongressHoldingsResponse:
-      title: CongressHoldingsResponse
-      description: Json response structure for enterprise congress holdings endpoint.
+    StrategyHoldingsInfrequentResponse:
+      title: StrategyHoldingsInfrequentResponse
+      description: JSON Response structure for strategy holdings endpoint.
       type: array
       items:
-        $ref: '#/components/schemas/HoldingsEntry'
-    Company:
-      title: Company
-      description: Base pydantic model used to hold standard config.
+        $ref: '#/components/schemas/StrategyHoldingsInfrequent'
+    HistoricalDPViewResponse:
+      title: HistoricalDPViewResponse
+      description: JSON Response structure for historical lobbying endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/DPShortRecord'
+    CongressionalTrade:
+      title: CongressionalTrade
+      description: V1 congressional trade data structure.
       type: object
       properties:
-        Name:
-          title: Name
+        Representative:
+          title: Representative
+          description: Name of Congressperson who made the transaction
           type: string
+        BioGuideID:
+          title: Bioguideid
+          description: BioGuide ID of the congressperson who made the transaction
+          type: string
+        ReportDate:
+          title: Reportdate
+          description: Date the transaction was reported
+          type: string
+          format: date-time
+        TransactionDate:
+          title: Transactiondate
+          description: Date the transaction took place
+          type: string
+          format: date-time
         Ticker:
           title: Ticker
+          description: Ticker of shares transacted
           type: string
+        Transaction:
+          title: Transaction
+          description: Purchase or Sale
+          type: string
+        Range:
+          title: Range
+          type: string
+        District:
+          title: District
+          description: District of the congressperson
+          type: string
+        House:
+          title: House
+          description: Representatives or Senate
+          type: string
+        Amount:
+          title: Amount
+          description: Lower bound of transaction size ($). Congressional trades are reported as a range of values, this variable is the lower bound of that range
+          default: 0
+          type: string
+        Party:
+          title: Party
+          description: Political party of the congressperson who made the trade
+          type: string
+        last_modified:
+          title: Last Modified
+          description: Date that Quiver last updated the details of this transaction
+          type: string
+          format: date-time
+        TickerType:
+          title: Tickertype
+          description: 'Reported type of asset traded. Note: CS and ST are commonly used as abbreviated for common stock'
+          type: string
+        Description:
+          title: Description
+          description: Transaction description
+          type: string
+        ExcessReturn:
+          title: Excessreturn
+          description: Estimated return of stock compared to return of S&P 500 since the transaction date
+          type: number
+        PriceChange:
+          title: Pricechange
+          description: Percentage change in stock price since the transaction date
+          type: number
+        SPYChange:
+          title: Spychange
+          description: Percentage change in S&P 500 since the transaction date
+          type: number
       required:
+      - Representative
+      - Party
+    CongressionalTradeV2:
+      title: CongressionalTradeV2
+      description: V2 congressional trade data structure.
+      type: object
+      properties:
+        Ticker:
+          title: Ticker
+          description: Ticker of shares transacted
+          type: string
+        TickerType:
+          title: Tickertype
+          description: 'Reported type of asset traded. Note: CS and ST are commonly used as abbreviated for common stock'
+          type: string
+        Company:
+          title: Company
+          description: RecentSenate
+          type: string
+        Traded:
+          title: Traded
+          description: Transaction date
+          type: string
+          format: date-time
+        Transaction:
+          title: Transaction
+          description: Purchase or Sale
+          type: string
+        Trade_Size_USD:
+          title: Trade Size Usd
+          description: Lower bound of transaction size ($). Congressional trades are reported as a range of values, this variable is the lower bound of that range
+          type: string
+        Status:
+          title: Status
+          description: Status of lawmaker’s position
+          type: string
+        Subholding:
+          title: Subholding
+          description: Reported subholding, if relevant
+          type: string
+        Description:
+          title: Description
+          description: Transaction description
+          type: string
+        Name:
+          title: Name
+          description: Name of congressperson who made the transaction
+          type: string
+        BioGuideID:
+          title: Bioguideid
+          description: BioGuide ID of the congressperson who made the transaction
+          type: string
+        Filed:
+          title: Filed
+          description: Disclosure date
+          type: string
+          format: date-time
+        Party:
+          title: Party
+          description: Party of the congressperson who made the transaction
+          type: string
+        District:
+          title: District
+          description: District of the congressperson who made the transaction
+          type: string
+        Chamber:
+          title: Chamber
+          description: Senate or House
+          type: string
+        Comments:
+          title: Comments
+          description: Any comments left by lawmaker
+          type: string
+        Quiver_Upload_Time:
+          title: Quiver Upload Time
+          description: Time that transaction was scraped and processed by Quiver
+          type: string
+          format: date-time
+        excess_return:
+          title: Excess Return
+          description: Estimated return of stock compared to return of S&P 500 since the transaction date
+          type: string
+        State:
+          title: State
+          type: string
+        last_modified:
+          title: Last Modified
+          description: Date that Quiver last updated the details of this transaction
+          type: string
+          format: date-time
+      required:
+      - Traded
       - Name
-      - Ticker
-    HoldingsEntry:
-      title: HoldingsEntry
+      - BioGuideID
+      - Filed
+      - Party
+      - Chamber
+    CoinsResponse:
+      title: CoinsResponse
+      description: JSON Response structure for coins endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/Coin'
+    LiveCongressPoliticiansResponse:
+      title: LiveCongressPoliticiansResponse
+      description: JSON Response structure for live congress politicians endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/PoliticianDetailEntry'
+    HouseTradeWithOptions:
+      title: HouseTradeWithOptions
+      description: Represents a house trade with additional options.
+      type: object
+      properties:
+        Representative:
+          title: Representative
+          description: Name of Congressperson who made the transaction
+          type: string
+        BioGuideID:
+          title: Bioguideid
+          description: BioGuide ID of the congressperson who made the transaction
+          type: string
+        ReportDate:
+          title: Reportdate
+          description: Date the transaction was reported
+          type: string
+          format: date-time
+        Date:
+          title: Date
+          description: Date the transaction took place
+          type: string
+          format: date-time
+        Ticker:
+          title: Ticker
+          description: Ticker of shares transacted
+          type: string
+        Transaction:
+          title: Transaction
+          description: Purchase or Sale
+          type: string
+        Range:
+          title: Range
+          type: string
+        District:
+          title: District
+          description: District of the congressperson
+          type: string
+        House:
+          title: House
+          description: Representatives or Senate
+          type: string
+        Amount:
+          title: Amount
+          description: Lower bound of transaction size ($). Congressional trades are reported as a range of values, this variable is the lower bound of that range
+          default: 0
+          type: string
+        party:
+          title: Party
+          type: string
+        last_modified:
+          title: Last Modified
+          description: Date that Quiver last updated the details of this transaction
+          type: string
+          format: date-time
+        Type:
+          title: Type
+          description: Stock or Stock Option
+          default: Stock
+          type: string
+        Description:
+          title: Description
+          description: Transaction description
+          type: string
+        ExcessReturn:
+          title: Excessreturn
+          description: Estimated return of stock compared to return of S&P 500 since the transaction date
+          type: number
+        PriceChange:
+          title: Pricechange
+          description: Percentage change in stock price since the transaction date
+          type: number
+        SPYChange:
+          title: Spychange
+          description: Percentage change in S&P 500 since the transaction date
+          type: number
+      required:
+      - Representative
+    AuthData:
+      title: AuthData
       description: Base pydantic model used to hold standard config.
       type: object
       properties:
-        Politician:
-          title: Politician
+        status:
+          title: Status
           type: string
-        Holdings:
-          title: Holdings
-          type: string
-        Type:
-          title: Type
+        current_period_end:
+          title: Current Period End
           type: string
       required:
-      - Politician
-      - Holdings
-      - Type
-    FundsResponse:
-      title: FundsResponse
-      description: JSON Response structure for funds endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/Fund'
-    LiveCongressViewResponse:
-      title: LiveCongressViewResponse
-      description: JSON Response structure for live congress view endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/CongressionalTrade'
+      - status
+      - current_period_end
     Legislation:
       title: Legislation
       description: Base pydantic model used to hold standard config.
@@ -1647,383 +2465,36 @@ components:
       - billID
       - uploaded
       - politicianCounts
-    CorporateDonorEntry:
-      title: CorporateDonorEntry
-      description: PAC corporate donor transaction.
+    HoldingsEntry:
+      title: HoldingsEntry
+      description: Base pydantic model used to hold standard config.
       type: object
       properties:
-        BioGuideID:
-          title: Bioguideid
+        Politician:
+          title: Politician
           type: string
-        CandidateName:
-          title: Candidatename
+        Holdings:
+          title: Holdings
           type: string
-        CompanyCMTENM:
-          title: Companycmtenm
+        Type:
+          title: Type
           type: string
-        TransactionDate:
-          title: Transactiondate
-          type: string
-          format: date-time
-        TransactionAmount:
-          title: Transactionamount
-          type: integer
-        Ticker:
-          title: Ticker
-          type: string
-        CommitteeName:
-          title: Committeename
-          type: string
-        Cycle:
-          title: Cycle
-          type: integer
-        TransactionType:
-          title: Transactiontype
-          type: string
-        CompanyCMTEID:
-          title: Companycmteid
-          type: string
-        Uploaded:
-          title: Uploaded
-          type: string
-    GovContractAll:
-      title: GovContractAll
-      description: Gov contract information (all).
-      type: object
-      properties:
-        Ticker:
-          title: Ticker
-          description: Company ticker
-          type: string
-        Date:
-          title: Date
-          description: Announcement date
-          type: string
-          format: date-time
-        Description:
-          title: Description
-          description: Contract description
-          type: string
-        Agency:
-          title: Agency
-          description: Awarding Agency Name
-          type: string
-        Amount:
-          title: Amount
-          description: Total dollars obligated under the given contract
-          type: number
-        action_date:
-          title: Action Date
-          description: Contract action date
-          type: string
-          format: date-time
       required:
-      - Ticker
-      - Date
-      - action_date
-    SenateTrade:
-      title: SenateTrade
-      description: Represents a senate trade as represented by trading endpoints.
-      type: object
-      properties:
-        Senator:
-          title: Senator
-          description: Name of Congressperson who made the transaction
-          type: string
-        BioGuideID:
-          title: Bioguideid
-          description: BioGuide ID of the congressperson who made the transaction
-          type: string
-        ReportDate:
-          title: Reportdate
-          description: Date the transaction was reported
-          type: string
-          format: date-time
-        Date:
-          title: Date
-          description: Date the transaction took place
-          type: string
-          format: date-time
-        Ticker:
-          title: Ticker
-          description: Ticker of shares transacted
-          type: string
-        Transaction:
-          title: Transaction
-          description: Purchase or Sale
-          type: string
-        Range:
-          title: Range
-          type: string
-        District:
-          title: District
-          description: District of the congressperson
-          type: string
-        House:
-          title: House
-          description: Representatives or Senate
-          type: string
-        Amount:
-          title: Amount
-          description: Lower bound of transaction size ($). Congressional trades are reported as a range of values, this variable is the lower bound of that range
-          default: 0
-          type: string
-        Party:
-          title: Party
-          description: Political party of the congressperson who made the trade
-          type: string
-        last_modified:
-          title: Last Modified
-          description: Date that Quiver last updated the details of this transaction
-          type: string
-          format: date-time
-        TickerType:
-          title: Tickertype
-          description: 'Reported type of asset traded. Note: CS and ST are commonly used as abbreviated for common stock'
-          type: string
-        Description:
-          title: Description
-          description: Transaction description
-          type: string
-        ExcessReturn:
-          title: Excessreturn
-          description: Estimated return of stock compared to return of S&P 500 since the transaction date
-          type: number
-        PriceChange:
-          title: Pricechange
-          description: Percentage change in stock price since the transaction date
-          type: number
-        SPYChange:
-          title: Spychange
-          description: Percentage change in S&P 500 since the transaction date
-          type: number
-      required:
-      - Senator
-      - Party
-    HistoricalLobbyingResponse:
-      title: HistoricalLobbyingResponse
-      description: JSON Response structure for historical lobbying endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/LobbyingRecord'
+      - Politician
+      - Holdings
+      - Type
     RecentGovContractsAllResponse:
       title: RecentGovContractsAllResponse
       description: JSON Response structure for recent gov contracts all endpoint.
       type: array
       items:
         $ref: '#/components/schemas/GovContractAll'
-    CoinsResponse:
-      title: CoinsResponse
-      description: JSON Response structure for coins endpoint.
+    LiveFlightsResponse:
+      title: LiveFlightsResponse
+      description: JSON Response structure for live flights endpoint.
       type: array
       items:
-        $ref: '#/components/schemas/Coin'
-    HouseTradeWithOptions:
-      title: HouseTradeWithOptions
-      description: Represents a house trade with additional options.
-      type: object
-      properties:
-        Representative:
-          title: Representative
-          description: Name of Congressperson who made the transaction
-          type: string
-        BioGuideID:
-          title: Bioguideid
-          description: BioGuide ID of the congressperson who made the transaction
-          type: string
-        ReportDate:
-          title: Reportdate
-          description: Date the transaction was reported
-          type: string
-          format: date-time
-        Date:
-          title: Date
-          description: Date the transaction took place
-          type: string
-          format: date-time
-        Ticker:
-          title: Ticker
-          description: Ticker of shares transacted
-          type: string
-        Transaction:
-          title: Transaction
-          description: Purchase or Sale
-          type: string
-        Range:
-          title: Range
-          type: string
-        District:
-          title: District
-          description: District of the congressperson
-          type: string
-        House:
-          title: House
-          description: Representatives or Senate
-          type: string
-        Amount:
-          title: Amount
-          description: Lower bound of transaction size ($). Congressional trades are reported as a range of values, this variable is the lower bound of that range
-          default: 0
-          type: string
-        party:
-          title: Party
-          type: string
-        last_modified:
-          title: Last Modified
-          description: Date that Quiver last updated the details of this transaction
-          type: string
-          format: date-time
-        Type:
-          title: Type
-          description: Stock or Stock Option
-          default: Stock
-          type: string
-        Description:
-          title: Description
-          description: Transaction description
-          type: string
-        ExcessReturn:
-          title: Excessreturn
-          description: Estimated return of stock compared to return of S&P 500 since the transaction date
-          type: number
-        PriceChange:
-          title: Pricechange
-          description: Percentage change in stock price since the transaction date
-          type: number
-        SPYChange:
-          title: Spychange
-          description: Percentage change in S&P 500 since the transaction date
-          type: number
-      required:
-      - Representative
-    StrategyHoldingsInfrequentResponse:
-      title: StrategyHoldingsInfrequentResponse
-      description: JSON Response structure for strategy holdings endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/StrategyHoldingsInfrequent'
-    TodayLobbyingResponse:
-      title: TodayLobbyingResponse
-      description: JSON Response structure for today lobbying endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/LobbyingRecord'
-    IgnoredTicker:
-      title: IgnoredTicker
-      description: Base pydantic model used to hold standard config.
-      type: object
-      properties:
-        Ticker:
-          title: Ticker
-          type: string
-      required:
-      - Ticker
-    CompaniesResponse:
-      title: CompaniesResponse
-      description: JSON Response structure for internal companies endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/Company'
-    RecentHouseViewResponse:
-      title: RecentHouseViewResponse
-      description: Json response structure for recent house view endpoint.
-      type: array
-      items:
-        anyOf:
-        - $ref: '#/components/schemas/HouseTradeWithOptions'
-        - type: string
-    CongressStockHolding:
-      title: CongressStockHolding
-      description: Represents a stock holding as represented by the live congress stock holdings endpoint.
-      type: object
-      properties:
-        BioGuideID:
-          title: Bioguideid
-          description: BioGuide ID of the congressperson holding the stock
-          type: string
-        Name:
-          title: Name
-          description: Name of the congressperson who made the transaction
-          type: string
-        Ticker:
-          title: Ticker
-          description: Ticker symbol of the stock held by the congressperson
-          type: string
-        CurrentHolding:
-          title: Currentholding
-          description: Estimated current holding of the stock by the congressperson (USD)
-          type: number
-        Allocation:
-          title: Allocation
-          description: Estimtated allocation of the stock in the congressperson's portfolio (percentage)
-          type: number
-      required:
-      - BioGuideID
-    PoliticianDetailEntry:
-      title: PoliticianDetailEntry
-      description: Unified politician entry for both congress members and candidates.
-      type: object
-      properties:
-        BioGuideID:
-          title: Bioguideid
-          type: string
-        CandidateID:
-          title: Candidateid
-          type: string
-        Name:
-          title: Name
-          type: string
-        Party:
-          title: Party
-          type: string
-        Chamber:
-          title: Chamber
-          type: string
-        State:
-          title: State
-          type: string
-        ImageURL:
-          title: Imageurl
-          type: string
-        TradeCount:
-          title: Tradecount
-          type: integer
-        TradeVolume:
-          title: Tradevolume
-          type: number
-        NetWorth:
-          title: Networth
-          type: number
-    BulkCongressPoliticiansResponse:
-      title: BulkCongressPoliticiansResponse
-      description: JSON Response structure for bulk congress politicians endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/PoliticianDetailEntry'
-    IgnoredTickersResponse:
-      title: IgnoredTickersResponse
-      description: JSON Response structure for ignored tickers endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/IgnoredTicker'
-    HistoricalHouseViewResponse:
-      title: HistoricalHouseViewResponse
-      description: Json response structure for historical house view endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/HouseTrade'
-    HistoricalGovContractsAllResponse:
-      title: HistoricalGovContractsAllResponse
-      description: JSON Response structure for historical gov contracts all endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/GovContractAll'
-    StrategyHoldingsResponse:
-      title: StrategyHoldingsResponse
-      description: JSON Response structure for strategy holdings endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/StrategyHoldings'
+        $ref: '#/components/schemas/Flight'
     PremiumAuthResponse:
       title: PremiumAuthResponse
       description: JSON Response structure for premium auth endpoint.
@@ -2033,131 +2504,6 @@ components:
           $ref: '#/components/schemas/AuthData'
       required:
       - data
-    SenateTradeWithOptions:
-      title: SenateTradeWithOptions
-      description: Represents a senate trade with additional options.
-      type: object
-      properties:
-        Senator:
-          title: Senator
-          description: Name of Congressperson who made the transaction
-          type: string
-        BioGuideID:
-          title: Bioguideid
-          description: BioGuide ID of the congressperson who made the transaction
-          type: string
-        ReportDate:
-          title: Reportdate
-          description: Date the transaction was reported
-          type: string
-          format: date-time
-        Date:
-          title: Date
-          description: Date the transaction took place
-          type: string
-          format: date-time
-        Ticker:
-          title: Ticker
-          description: Ticker of shares transacted
-          type: string
-        Transaction:
-          title: Transaction
-          description: Purchase or Sale
-          type: string
-        Range:
-          title: Range
-          type: string
-        District:
-          title: District
-          description: District of the congressperson
-          type: string
-        House:
-          title: House
-          description: Representatives or Senate
-          type: string
-        Amount:
-          title: Amount
-          description: Lower bound of transaction size ($). Congressional trades are reported as a range of values, this variable is the lower bound of that range
-          default: 0
-          type: string
-        Party:
-          title: Party
-          description: Political party of the congressperson who made the trade
-          type: string
-        last_modified:
-          title: Last Modified
-          description: Date that Quiver last updated the details of this transaction
-          type: string
-          format: date-time
-        Type:
-          title: Type
-          description: Stock or Stock Option
-          default: Stock
-          type: string
-        Description:
-          title: Description
-          description: Transaction description
-          type: string
-        ExcessReturn:
-          title: Excessreturn
-          description: Estimated return of stock compared to return of S&P 500 since the transaction date
-          type: number
-        PriceChange:
-          title: Pricechange
-          description: Percentage change in stock price since the transaction date
-          type: number
-        SPYChange:
-          title: Spychange
-          description: Percentage change in S&P 500 since the transaction date
-          type: number
-      required:
-      - Senator
-      - Party
-    HistoricalDPViewResponse:
-      title: HistoricalDPViewResponse
-      description: JSON Response structure for historical lobbying endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/DPShortRecord'
-    LiveFlightsResponse:
-      title: LiveFlightsResponse
-      description: JSON Response structure for live flights endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/Flight'
-    HistoricalGovContractsResponse:
-      title: HistoricalGovContractsResponse
-      description: JSON Response structure for historical gov contracts endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/GovContract'
-    BulkCorporateDonorsResponse:
-      title: BulkCorporateDonorsResponse
-      description: JSON Response structure for bulk corporate donors endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/CorporateDonorEntry'
-    TodayDPViewResponse:
-      title: TodayDPViewResponse
-      description: JSON Response structure for today lobbying endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/DPShortRecord'
-    RecentSenateViewResponse:
-      title: RecentSenateViewResponse
-      description: Json response structure for recent senate view endpoint.
-      type: array
-      items:
-        anyOf:
-        - $ref: '#/components/schemas/SenateTrade'
-        - $ref: '#/components/schemas/SenateTradeWithOptions'
-        - type: string
-    HistoricalCongressViewResponse:
-      title: HistoricalCongressViewResponse
-      description: JSON Response structure for historical congress view endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/CongressionalTrade'
     Fund:
       title: Fund
       description: Base pydantic model used to hold standard config.
@@ -2168,358 +2514,12 @@ components:
           type: string
       required:
       - Fund
-    LiveRSSResponse:
-      title: LiveRSSResponse
-      description: JSON Response structure for live rss endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/RSSData'
-    TodayLegislationResponse:
-      title: TodayLegislationResponse
-      description: JSON Response structure for recent legislation endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/Legislation'
-    LiveCongressPoliticiansResponse:
-      title: LiveCongressPoliticiansResponse
-      description: JSON Response structure for live congress politicians endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/PoliticianDetailEntry'
-    GovContract:
-      title: GovContract
-      description: Gov contract information (basic).
-      type: object
-      properties:
-        Ticker:
-          title: Ticker
-          description: Company ticker
-          type: string
-        Amount:
-          title: Amount
-          description: Total dollars obligated under the given contract
-          type: string
-        Qtr:
-          title: Qtr
-          description: Calendar quarter
-          type: integer
-        Year:
-          title: Year
-          description: Year of the contract announcement
-          type: integer
-      required:
-      - Ticker
-      - Amount
-      - Qtr
-      - Year
-    PolymarketTopTradesResponse:
-      title: PolymarketTopTradesResponse
-      description: JSON Response structure for the Polymarket large/unusual trades endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/PolymarketTrade'
-    Coin:
-      title: Coin
-      description: Base pydantic model used to hold standard config.
-      type: object
-      properties:
-        Coin:
-          title: Coin
-          type: string
-      required:
-      - Coin
-    TrumpStockTradesResponse:
-      title: TrumpStockTradesResponse
-      description: JSON Response structure for Trump stock trades endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/TrumpStockTrade'
-    BillSummary:
-      title: BillSummary
-      description: Base pydantic model used to hold standard config.
-      type: object
-      properties:
-        title:
-          title: Title
-          type: string
-        congress:
-          title: Congress
-          type: integer
-        number:
-          title: Number
-          type: string
-        originChamber:
-          title: Originchamber
-          type: string
-        currentChamber:
-          title: Currentchamber
-          type: string
-        billType:
-          title: Billtype
-          type: string
-        summary:
-          title: Summary
-          type: string
-        url:
-          title: Url
-          type: string
-        lastAction:
-          title: Lastaction
-          type: string
-        lastActionDate:
-          title: Lastactiondate
-          type: string
-        ctid:
-          title: Ctid
-          type: string
-      required:
-      - title
-      - congress
-      - number
-      - originChamber
-      - billType
-      - summary
-      - url
-      - lastAction
-      - lastActionDate
-    LiveCongressStockHoldingsResponse:
-      title: LiveCongressStockHoldingsResponse
-      description: JSON Response structure for live congress stock holdings endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/CongressStockHolding'
-    StrategyHoldingsInfrequent:
-      title: StrategyHoldingsInfrequent
-      description: Base pydantic model used to hold standard config.
-      type: object
-      properties:
-        Strategy:
-          title: Strategy
-          type: string
-        Date:
-          title: Date
-          type: string
-          format: date-time
-        Holdings:
-          title: Holdings
-          type: string
-        Upload_Date:
-          title: Upload Date
-          type: string
-        Rebalance_Date:
-          title: Rebalance Date
-          type: string
-      required:
-      - Strategy
-      - Date
-      - Holdings
-      - Upload_Date
-      - Rebalance_Date
-    Personality:
-      title: Personality
-      description: CNBC stats model.
-      type: object
-      properties:
-        Name:
-          title: Name
-          type: string
-      required:
-      - Name
     RecentGovContractsResponse:
       title: RecentGovContractsResponse
       description: JSON Response structure for recent gov contracts endpoint.
       type: array
       items:
         $ref: '#/components/schemas/GovContract'
-    RSSData:
-      title: RSSData
-      description: Base pydantic model used to hold standard config.
-      type: object
-      properties:
-        Dataset:
-          title: Dataset
-          type: string
-        Ticker:
-          title: Ticker
-          type: string
-        Text:
-          title: Text
-          type: string
-        URL:
-          title: Url
-          type: string
-        Time:
-          title: Time
-          type: string
-          format: date-time
-      required:
-      - Dataset
-      - Ticker
-      - Text
-      - URL
-      - Time
-    BillSummariesResponse:
-      title: BillSummariesResponse
-      description: JSON Response structure for bill summaries endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/BillSummary'
-    AuthData:
-      title: AuthData
-      description: Base pydantic model used to hold standard config.
-      type: object
-      properties:
-        status:
-          title: Status
-          type: string
-        current_period_end:
-          title: Current Period End
-          type: string
-      required:
-      - status
-      - current_period_end
-    HouseTrade:
-      title: HouseTrade
-      description: Represents a house trade as represented by trading endpoints.
-      type: object
-      properties:
-        Representative:
-          title: Representative
-          description: Name of Congressperson who made the transaction
-          type: string
-        BioGuideID:
-          title: Bioguideid
-          description: BioGuide ID of the congressperson who made the transaction
-          type: string
-        ReportDate:
-          title: Reportdate
-          description: Date the transaction was reported
-          type: string
-          format: date-time
-        Date:
-          title: Date
-          description: Date the transaction took place
-          type: string
-          format: date-time
-        Ticker:
-          title: Ticker
-          description: Ticker of shares transacted
-          type: string
-        Transaction:
-          title: Transaction
-          description: Purchase or Sale
-          type: string
-        Range:
-          title: Range
-          type: string
-        District:
-          title: District
-          description: District of the congressperson
-          type: string
-        House:
-          title: House
-          description: Representatives or Senate
-          type: string
-        Amount:
-          title: Amount
-          description: Lower bound of transaction size ($). Congressional trades are reported as a range of values, this variable is the lower bound of that range
-          default: 0
-          type: string
-        Party:
-          title: Party
-          description: Political party of the congressperson who made the trade
-          type: string
-        last_modified:
-          title: Last Modified
-          description: Date that Quiver last updated the details of this transaction
-          type: string
-          format: date-time
-        TickerType:
-          title: Tickertype
-          description: 'Reported type of asset traded. Note: CS and ST are commonly used as abbreviated for common stock'
-          type: string
-        Description:
-          title: Description
-          description: Transaction description
-          type: string
-        ExcessReturn:
-          title: Excessreturn
-          description: Estimated return of stock compared to return of S&P 500 since the transaction date
-          type: number
-        PriceChange:
-          title: Pricechange
-          description: Percentage change in stock price since the transaction date
-          type: number
-        SPYChange:
-          title: Spychange
-          description: Percentage change in S&P 500 since the transaction date
-          type: number
-      required:
-      - Representative
-      - Party
-    LobbyingRecord:
-      title: LobbyingRecord
-      description: Lobbying information.
-      type: object
-      properties:
-        Date:
-          title: Date
-          description: Date that the lobbying spend was reported
-          type: string
-          format: date-time
-        Amount:
-          title: Amount
-          description: Size of spending instance (USD)
-          type: string
-        Client:
-          title: Client
-          description: Full name of the lobbying client
-          type: string
-        Issue:
-          title: Issue
-          description: Category of legislation that is being lobbied for
-          type: string
-        Specific_Issue:
-          title: Specific Issue
-          description: Specific piece of legislation being lobbied for
-          type: string
-        Registrant:
-          title: Registrant
-          description: Full name of the disclosure registrant
-          type: string
-        Ticker:
-          title: Ticker
-          description: Company ticker
-          type: string
-      required:
-      - Date
-      - Registrant
-      - Ticker
-    TickerData:
-      title: TickerData
-      description: Base pydantic model used to hold standard config.
-      type: object
-      properties:
-        Ticker:
-          title: Ticker
-          type: string
-        wsbMentionsWeekly:
-          title: Wsbmentionsweekly
-          type: number
-        wiki_change:
-          title: Wiki Change
-          type: number
-        twitter_change:
-          title: Twitter Change
-          type: number
-        congressBought:
-          title: Congressbought
-          type: boolean
-        congressSold:
-          title: Congresssold
-          type: boolean
-      required:
-      - Ticker
   securitySchemes:
     WebPlatformTokenAuth:
       type: http

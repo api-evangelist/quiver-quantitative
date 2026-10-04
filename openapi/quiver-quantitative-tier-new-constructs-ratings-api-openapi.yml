@@ -45,6 +45,12 @@ paths:
           description: ''
 components:
   schemas:
+    EarningsDistortionScoresResponse:
+      title: EarningsDistortionScoresResponse
+      description: JSON Response structure for earnings distortion scores endpoint.
+      type: array
+      items:
+        $ref: '#/components/schemas/EarningsDistortionScore'
     EarningsDistortionScore:
       title: EarningsDistortionScore
       description: Earnings distortion score model.
@@ -160,12 +166,6 @@ components:
       required:
       - ticker_current
       - event_date
-    EarningsDistortionScoresResponse:
-      title: EarningsDistortionScoresResponse
-      description: JSON Response structure for earnings distortion scores endpoint.
-      type: array
-      items:
-        $ref: '#/components/schemas/EarningsDistortionScore'
   securitySchemes:
     WebPlatformTokenAuth:
       type: http
